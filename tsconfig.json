@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "outDir": "build/dist",// 输出目录
+    "module": "esnext",// 指定生成哪个模块系统代码
+    "target": "esnext",// 编译的目标是什么版本的
+    "lib": ["esnext", "dom"],// 编译过程中需要引入的库文件的列表
+    "sourceMap": true,// 是否生成map文件
+    "baseUrl": ".",// 工作目录
+    "jsx": "react",// 在.tsx文件中支持JSX
+    "allowSyntheticDefaultImports": true,// 允许引用没有默认的导出块
+    "moduleResolution": "node",// 指定模块解析方式
+    "forceConsistentCasingInFileNames": true,// 不允许不同变量来代表同一文件
+    "noImplicitReturns": true,// 函数所有路径都必须有显示return
+    "suppressImplicitAnyIndexErrors": true,// 不提示对象索引隐式的错误
+    "noUnusedLocals": true,// 未使用的本地变量将报错
+    "allowJs": true,// 允许编译JavaScript文件
+    "skipLibCheck": true,// 对库定义文件跳过类型检查
+    "experimentalDecorators": true,// 启用实验性的ES装饰器
+    "strict": true,// 同时开启 alwaysStrict, noImplicitAny, noImplicitThis 和 strictNullChecks (2.3 以上)
+    "paths": {// 指定模块的路径，和baseUrl有关联，和webpack中resolve.alias配置一样
+      "@/*": ["./src/*"]// 指定后可以在文件中直接 import 时用@代替src
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "tslint:latest",
+    "tslint-config-prettier"
+  ]
+}
