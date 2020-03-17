@@ -68,11 +68,6 @@ const LoginItem: React.FC<LoginItemProps> = props => {
     // options包括rules、onChange、initialValue
     const options = getFormItemOptions(props)
     const otherProps = restProps || {}
-    if (type === 'Captcha') {
-        return (
-            <div>验证码</div>
-        )
-    }
 
     return (
         <FormItem name={name} {...options}>

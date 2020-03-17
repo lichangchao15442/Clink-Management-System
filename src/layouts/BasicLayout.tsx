@@ -31,7 +31,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             })
         }
     }, [])
-    return <>22222</>
+    return <>BasicLayout</>
 }
 
 export default connect(({ global, settings }: ConnectState) => ({

@@ -25,6 +25,7 @@ const Authorized: React.FunctionComponent<AuthorizedProps> = ({
     console.log('Authorized', children, authority)
     const childrenRender = typeof children === 'undefined' ? null : children
     const dom = check(authority, childrenRender, noMatch)
+    console.log('dom', dom)
     return <>{dom}</>
 }
 

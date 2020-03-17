@@ -6,10 +6,18 @@ export default {
     'resetandpassword.verification-code.required': 'Get Code',
     'resetandpassword.verification-code.placeholder': 'Please enter the code',
     'resetandpassword.reset.get-verification-code': 'Send Captcha',
+    'resetandpassword.reset.resend-verification-code': 's Send Again',
     'resetandpassword.password.placeholder': 'Please enter the new password',
+    'resetandpassword.password.required': 'Please enter the new password',
     'resetandpassword.confirm-password.placeholder': 'Please enter the password again',
     'resetandpassword.confirm-password.required': 'Please confirm your password',
     'resetandpassword.reset.ensure': 'Ensure',
-    'resetandpassword.reset.sign-in': 'Already have an account'
-
+    'resetandpassword.reset.sign-in': 'Already have an account',
+    'resetandpassword.strength.strong': 'Strength:strong',
+    'resetandpassword.strength.medium': 'Strength:medium',
+    'resetandpassword.strength.short': 'Strength:short',
+    'resetandpassword.strength.msg': "Please enter at least 6 characters and don't use passwords that are easy to guess.",
+    'resetandpassword.password.twice': 'The passwords entered twice do not match!',
+    'resetandpassword.captcha.wrong': 'Captcha Wrong!',
+    'resetandpassword.mobile.noAuthority': 'This account does not have authority!'
 }

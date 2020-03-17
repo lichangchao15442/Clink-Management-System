@@ -4,7 +4,9 @@ import { MenuDataItem, getMenuData, getPageTitle } from '@ant-design/pro-layout'
 import { connect } from 'dva'
 import { formatMessage } from 'umi-plugin-react/locale'
 import { Helmet } from 'react-helmet'
+import SelectLang from '@/components/SelectLang'
 import styles from './UserLayout.less'
+import logo from "../assets/u145.png"
 
 export interface UserLayoutProps extends ConnectProps {
     breadcrumbNameMap: {
@@ -26,7 +28,6 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
 
     })
 
-    console.log("title", title)
     return (
         <>
             <Helmet>
@@ -34,7 +35,12 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
                 <meta name='description' content={title} />
             </Helmet>
             <div className={styles.container}>
-                <div className={styles.lang}>lang</div>
+                <div className={styles.icons}>
+                    <span className={styles.heartIcon}>
+                        <img src={logo} alt='heart' />
+                    </span>
+                    <SelectLang />
+                </div>
                 <div className={styles.content}>{children}</div>
             </div>
         </>

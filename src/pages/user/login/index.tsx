@@ -1,40 +1,74 @@
 import React, { useState } from 'react'
-import { Checkbox } from 'antd'
+import { Checkbox, Alert } from 'antd'
 import { Link } from 'umi'
+import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale'
+import { connect } from 'dva'
+import { Dispatch, AnyAction } from 'redux'
 import LoginForm from './components/Login'
+import { LoginParamsType } from './service'
+import { StateType } from './model'
 import styles from './index.less'
 
 const { Mobile, Password, Submit } = LoginForm
 
-const Login = props => {
+interface LoginProps {
+    dispatch: Dispatch<AnyAction>;
+    userAndlogin: StateType;
+    submitting?: boolean
+}
+
+const LoginMessage: React.FC<{
+    content: string
+}> = ({ content }) => (
+    <Alert
+        style={{ marginBottom: 24 }}
+        type='error'
+        message={content}
+        showIcon
+    />
+)
+
+
+const Login: React.FC<LoginProps> = props => {
+    const { userAndlogin = {}, submitting } = props
+    const { status } = userAndlogin
     const [autoLogin, setAutoLogin] = useState(true)
+    const handleSubmit = (values: LoginParamsType) => {
+        const { dispatch } = props
+        dispatch({
+            type: 'userAndlogin/login',
+            payload: values
+        })
+    }
     return (
         <div className={styles.main}>
             <div className={styles.image} />
             <div className={styles.loginForm}>
-                <h1 className={styles.title}>登录诊所管理系统</h1>
-                <LoginForm>
+                <h1 className={styles.title}>
+                    <FormattedMessage id='userandlogin.login.title' /></h1>
+                <LoginForm onSubmit={handleSubmit}>
+                    {status === 'error' && !submitting && (<LoginMessage content='账户或密码错误' />)}
                     <Mobile
                         name='mobile'
-                        placeholder='请输入手机号码'
+                        placeholder={formatMessage({ id: 'userandlogin.mobile.placeholder' })}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入手机号码'
+                                message: formatMessage({ id: 'userandlogin.mobile.required' })
                             },
                             {
                                 pattern: /^1\d{10}$/,
-                                message: '手机号格式错误'
+                                message: formatMessage({ id: 'userandlogin.mobile.pattern' })
                             }
                         ]}
                     />
                     <Password
                         name='password'
-                        placeholder='请输入密码'
+                        placeholder={formatMessage({ id: 'userandlogin.password.placeholder' })}
                         rules={[
                             {
                                 required: true,
-                                message: '请输入手机号'
+                                message: formatMessage({ id: 'userandlogin.password.required' })
                             }
                         ]}
                     />
@@ -42,16 +76,33 @@ const Login = props => {
                         <Checkbox
                             style={{ fontSize: 10 }}
                             checked={autoLogin}
-                            onChange={e => setAutoLogin(e.target.value)}>
-                            一个月内免登陆
+                            onChange={e => setAutoLogin(e.target.checked)}>
+                            <FormattedMessage id='userandlogin.login.autologin' />
                         </Checkbox>
-                        <Link to='/user/reset-password' style={{ float: 'right' }} > 忘记密码 </Link>
+                        <Link to='/user/reset-password' style={{ float: 'right' }} >
+                            <FormattedMessage id='userandlogin.login.forgetpassword' />
+                        </Link>
                     </div>
-                    <Submit>登录</Submit>
+                    <Submit loading={submitting}><FormattedMessage id='userandlogin.login.login' /></Submit>
                 </LoginForm>
             </div>
         </div>
     )
 }
 
-export default Login
+export default connect(
+    ({
+        userAndlogin,
+        loading
+    }: {
+        userAndlogin: StateType;
+        loading: {
+            effects: {
+                [key: string]: boolean
+            }
+        }
+    }) => ({
+        userAndlogin,
+        submitting: loading.effects['userAndlogin/login']
+    })
+)(Login)

@@ -22,17 +22,32 @@ const checkPermissions = <T, K>(
 ): T | K | React.ReactNode => {
     // 没有判定权限，默认查看所有
     if (!authority) {
-        return '没有判定权限'
+        console.log('target', target)
+        return target
     }
 
     // 数组处理
     if (Array.isArray(authority)) {
-        return '数组处理'
+        console.log("check-currentAuthority",currentAuthority)
+        if (Array.isArray(currentAuthority)) {
+            if (currentAuthority.some(item => authority.includes(item))) {
+                return target
+            }
+        } else if (authority.includes(currentAuthority)) {
+            return target
+        }
+        return Exception
     }
 
     // string处理
     if (typeof authority === 'string') {
-        console.log("authority", authority)
+        if (Array.isArray(currentAuthority)) {
+            if (currentAuthority.some(item => authority === item)) {
+                return target
+            }
+        } else if (authority === currentAuthority) {
+            return target
+        }
         return Exception
     }
 

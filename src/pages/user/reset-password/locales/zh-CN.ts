@@ -6,9 +6,18 @@ export default {
     'resetandpassword.verification-code.required': '获取验证码',
     'resetandpassword.verification-code.placeholder': '请输入验证码',
     'resetandpassword.reset.get-verification-code': '发送验证码',
+    'resetandpassword.reset.resend-verification-code': '秒后重新发送',
     'resetandpassword.password.placeholder': '请输入新密码',
+    'resetandpassword.password.required': '请输入新密码',
     'resetandpassword.confirm-password.placeholder': '再次输入密码',
     'resetandpassword.confirm-password.required': '请确认密码',
     'resetandpassword.reset.ensure': '确定',
-    'resetandpassword.reset.sign-in': '已有账号，去登录'
+    'resetandpassword.reset.sign-in': '已有账号，去登录',
+    'resetandpassword.strength.strong': '强度：强',
+    'resetandpassword.strength.medium': '强度：中',
+    'resetandpassword.strength.short': '强度：太短',
+    'resetandpassword.strength.msg': '请至少输入 6 个字符。请不要使用容易被猜到的密码。',
+    'resetandpassword.password.twice': '两次输入的密码不匹配!',
+    'resetandpassword.captcha.wrong': '验证码不正确!',
+    'resetandpassword.mobile.noAuthority': '该账号无权限!'
 }

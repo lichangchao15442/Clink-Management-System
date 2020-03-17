@@ -1,4 +1,21 @@
+import { Request, Response } from 'express'
 
+let users = [
+    {
+        mobile: '12345678900',
+        password: 'admin',
+        authority: 'admin'
+    },
+    {
+        mobile: '12345678901',
+        password: 'user',
+        authority: 'user'
+    },
+]
+
+function getFakeCaptcha(req: Request, res: Response) {
+    return res.json('15442')
+}
 
 export default {
     // 支持Object和Array
@@ -9,5 +26,41 @@ export default {
         email: 'lichangchao@yy.com',
         signature: '小呆逼',
         title: '李最火',
+    },
+    'POST /api/login/account': (req: Request, res: Response) => {
+        const { mobile, password } = req.body
+        const user = users.find(item => {
+            return item.mobile === mobile
+        })
+        if (user && user.password === password) {
+            res.send({
+                status: 'ok',
+                currentAuthority: user.authority
+            })
+        } else {
+            res.send({
+                status: 'error',
+                currentAuthority: 'guest'
+            })
+        }
+    },
+    'GET /api/login/captcha': getFakeCaptcha,
+    'POST /api/reset-password': (req: Request, res: Response) => {
+        const { mobile, password } = req.body
+        let user = users.find(item => {
+            return item.mobile === mobile
+        })
+        if (user) {
+            user.password = password
+            res.send({
+                status: 'ok',
+                currentAuthority: user.authority
+            })
+        } else {
+            res.send({
+                status: 'error',
+                currentAuthority: 'guest'
+            })
+        }
     }
 }

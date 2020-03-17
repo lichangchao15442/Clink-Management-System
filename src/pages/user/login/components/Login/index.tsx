@@ -23,7 +23,6 @@ interface LoginType extends React.FC<LoginProps> {
 }
 
 const Login: LoginType = props => {
-    console.log('LoginForm', props)
 
     return (
         <div>

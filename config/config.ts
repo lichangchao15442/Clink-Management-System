@@ -38,7 +38,20 @@ const config: IConfig = {
                     path: '/',
                     component: '../layouts/BasicLayout',
                     Routes: ['src/pages/Authorized'],
-                    authority: ['admin', 'user']
+                    authority: ['admin', 'user'],
+                    routes: [
+                        {
+                            name: 'business-overview',
+                            icon: 'calendar',
+                            path: '/business-overview',
+                            component: './business-overview'
+                        },
+                        {
+                            path: '/',
+                            redirect: '/business-overview',
+                            authority: ['admin', 'user']
+                        },
+                    ]
                 }
             ]
         }
@@ -67,6 +80,28 @@ const config: IConfig = {
             },
         }],
     ],
+    disableRedirectHoist: true,
+    // cssLoaderOptions: {
+    //     models: true,
+    //     getLocalIdent: (
+    //         context: {
+    //             resourcePath: string
+    //         },
+    //         _: string,
+    //         localName: string
+    //     ) => {
+    //         if (context.resourcePath.includes('node_modules') ||
+    //             context.resourcePath.includes('global.less') ||
+    //             context.resourcePath.includes('ant.design-pro.less')
+    //         ) {
+    //             console.log(context, localName)
+    //         }
+    //         return localName
+    //     }
+    // },
+    lessLoaderOptions: {
+        javascriptEnabled: true
+    }
 }
 
 export default config;
