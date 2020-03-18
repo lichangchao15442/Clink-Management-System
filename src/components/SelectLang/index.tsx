@@ -18,11 +18,12 @@ const languageIcons = {
 }
 
 interface SelectLangProps {
-    className?: string
+    className?: string;
+    color?: string
 }
 
 const SelectLang: React.FC<SelectLangProps> = (props) => {
-    const { className } = props
+    const { className, color } = props
     const selectedLang = getLocale()
 
     const changeLang = ({ key }: ClickParam): void => setLocale(key)
@@ -41,7 +42,7 @@ const SelectLang: React.FC<SelectLangProps> = (props) => {
     return (
         <HeaderDropdown overlay={langMenu}>
             <span className={classnames(styles.dropDown, className)}>
-                <GlobalOutlined title='语言' />
+                <GlobalOutlined title='语言' style={{ color: color || '#fff' }} />
             </span>
         </HeaderDropdown>
     )

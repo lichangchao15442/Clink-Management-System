@@ -46,13 +46,25 @@ const Model: ModelType = {
             // 登录成功
             if (response.status === 'ok') {
                 message.success('登录成功！')
+                // 将用户的电话号码存在本地作为查询用户信息的关键值
+                localStorage.setItem('mobile', payload.mobile)
+                // 登录进入上一次退出的页面
                 const urlParams = new URL(window.location.href)
                 const params = getPageQuery()
                 let { redirect } = params as { redirect: string }
                 if (redirect) {
-                    alert('redirect-重定向')
+                    const redirectUrlParam = new URL(redirect)
+                    // 如果同源（协议、域名、端口号相同）
+                    if (redirectUrlParam.origin === urlParams.origin) {
+                        redirect = redirect.substr(urlParams.origin.length)
+                        if (redirect.match(/^\/.*#/)) {
+                            redirect = redirect.substr(redirect.indexOf('#') + 1)
+                        }
+                    } else {
+                        window.location.href = redirect
+                        return;
+                    }
                 }
-                // console.log("urlParams", urlParams)
                 // 跳转路由
                 yield put(routerRedux.replace(redirect || '/business-overview'))
             }

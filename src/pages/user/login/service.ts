@@ -2,10 +2,9 @@ import request from "umi-request";
 
 
 export interface LoginParamsType {
-    // userName: string;
     password: string;
     mobile: string;
-    // captcha: string;
+    autoLogin: boolean;
 }
 
 export async function fakeAccountLogin(params: LoginParamsType) {

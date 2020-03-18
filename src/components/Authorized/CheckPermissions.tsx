@@ -28,7 +28,7 @@ const checkPermissions = <T, K>(
 
     // 数组处理
     if (Array.isArray(authority)) {
-        console.log("check-currentAuthority",currentAuthority)
+        // console.log("check-currentAuthority",currentAuthority)
         if (Array.isArray(currentAuthority)) {
             if (currentAuthority.some(item => authority.includes(item))) {
                 return target

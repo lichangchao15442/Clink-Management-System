@@ -1,6 +1,35 @@
-import { IConfig } from 'umi-types';
+import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'
 
+
+const plugins: IPlugin[] = [
+    ['umi-plugin-antd-icon-config', {}],
+    ['umi-plugin-react', {
+        antd: true,
+        dva: true,
+        title: 'clinic-management-system',
+        dll: false,
+        locale: {
+            enable: true,
+            default: 'zh-CN',
+            baseNavigator: true
+        },
+        dynamicImport: {
+            loadingComponent: './components/PageLoading/index',
+            webpackChunkName: true,
+            level: 3,
+        },
+        routes: {
+            exclude: [
+                /models\//,
+                /services\//,
+                /model\.(t|j)sx?$/,
+                /service\.(t|j)sx?$/,
+                /components\//,
+            ],
+        },
+    }],
+]
 // ref: https://umijs.org/config/
 const config: IConfig = {
     treeShaking: true,
@@ -56,30 +85,7 @@ const config: IConfig = {
             ]
         }
     ],
-    plugins: [
-        // ref: https://umijs.org/plugin/umi-plugin-react.html
-        ['umi-plugin-react', {
-            antd: true,
-            dva: true,
-            dynamicImport: false,
-            title: 'clinic-management-system',
-            dll: false,
-            locale: {
-                enable: true,
-                default: 'zh-CN',
-                baseNavigator: true
-            },
-            routes: {
-                exclude: [
-                    /models\//,
-                    /services\//,
-                    /model\.(t|j)sx?$/,
-                    /service\.(t|j)sx?$/,
-                    /components\//,
-                ],
-            },
-        }],
-    ],
+    plugins,
     disableRedirectHoist: true,
     // cssLoaderOptions: {
     //     models: true,

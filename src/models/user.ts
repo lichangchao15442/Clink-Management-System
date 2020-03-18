@@ -5,10 +5,7 @@ import { Reducer } from 'redux'
 export interface currentUser {
     avatar?: string;
     name?: string;
-    userid?: string;
-    // email?: string;
-    title?: string;
-    signature?: string;
+    mobile?: string;
 }
 
 
@@ -35,8 +32,8 @@ const UserModel: UserModelType = {
     },
 
     effects: {
-        *fetchCurrent(_, { call, put }) {
-            const response = yield call(queryCurrent)
+        *fetchCurrent({ payload }, { call, put }) {
+            const response = yield call(queryCurrent, payload)
             yield put({
                 type: 'saveCurrentUser',
                 payload: response

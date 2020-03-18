@@ -1,24 +1,38 @@
-
-
+import { Reducer } from 'redux'
+import { Effect } from 'dva'
 
 export interface GlobalModelState {
     collapsed: boolean;
-    // notices:
 }
 
-const GlobalModel = {
+interface GlobalModelProps {
+    namespace: string;
+    state: GlobalModelState;
+    // effects: Effect;
+    reducers: {
+        changeLayoutCollapsed: Reducer<GlobalModelState>
+    }
+}
+
+const GlobalModel: GlobalModelProps = {
     namespace: 'global',
 
     state: {
         collapsed: false,
-        // notices: []
     },
 
-    effects: {},
+    // effects: {},
 
-    reducers: {},
+    reducers: {
+        changeLayoutCollapsed(state, { payload }): GlobalModelState {
+            return {
+                ...state,
+                collapsed: payload
+            }
+        }
+    },
 
-    subscriptions: {}
+    // subscriptions: {}
 }
 
 export default GlobalModel

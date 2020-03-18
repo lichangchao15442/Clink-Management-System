@@ -42,6 +42,8 @@ const Model: ModelProps = {
             })
             if (response.status === 'ok') {
                 message.success('设置密码成功')
+                // 将用户的电话号码存在本地作为查询用户信息的关键值
+                localStorage.setItem('mobile', payload.mobile)
                 yield put(routerRedux.replace('/business-overview'))
             }
         }

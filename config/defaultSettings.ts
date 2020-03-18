@@ -50,7 +50,7 @@ export default {
     menu: {
         locale: true
     },
-    title: 'Clinic Management System',
+    title: 'Clinic System',
     pwa: false,
     iconfontUrl: '',
 } as DefaultSettings

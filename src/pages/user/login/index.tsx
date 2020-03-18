@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Checkbox, Alert } from 'antd'
+import { Checkbox, Alert, Form } from 'antd'
 import { Link } from 'umi'
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale'
 import { connect } from 'dva'
@@ -34,6 +34,7 @@ const Login: React.FC<LoginProps> = props => {
     const { status } = userAndlogin
     const [autoLogin, setAutoLogin] = useState(true)
     const handleSubmit = (values: LoginParamsType) => {
+        values.autoLogin = autoLogin
         const { dispatch } = props
         dispatch({
             type: 'userAndlogin/login',
@@ -72,7 +73,7 @@ const Login: React.FC<LoginProps> = props => {
                             }
                         ]}
                     />
-                    <div className={styles.autoLogin}>
+                    <Form.Item name='autoLogin' className={styles.autoLogin}>
                         <Checkbox
                             style={{ fontSize: 10 }}
                             checked={autoLogin}
@@ -82,7 +83,7 @@ const Login: React.FC<LoginProps> = props => {
                         <Link to='/user/reset-password' style={{ float: 'right' }} >
                             <FormattedMessage id='userandlogin.login.forgetpassword' />
                         </Link>
-                    </div>
+                    </Form.Item>
                     <Submit loading={submitting}><FormattedMessage id='userandlogin.login.login' /></Submit>
                 </LoginForm>
             </div>

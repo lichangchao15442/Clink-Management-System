@@ -7,9 +7,10 @@ interface AuthorizedProps {
     noMatch?: React.ReactNode;
 }
 
-// type IAuthorizedType = React.FunctionComponent<AuthorizedProps> & {
-//     Secured: typeof 
-// }
+type IAuthorizedType = React.FunctionComponent<AuthorizedProps> & {
+    // Secured: typeof 
+    check: typeof check
+}
 
 const Authorized: React.FunctionComponent<AuthorizedProps> = ({
     children,
@@ -22,11 +23,11 @@ const Authorized: React.FunctionComponent<AuthorizedProps> = ({
         />
     )
 }) => {
-    console.log('Authorized', children, authority)
+    // console.log('Authorized', children, authority)
     const childrenRender = typeof children === 'undefined' ? null : children
     const dom = check(authority, childrenRender, noMatch)
-    console.log('dom', dom)
+    // console.log('dom', dom)
     return <>{dom}</>
 }
 
-export default Authorized
+export default Authorized as IAuthorizedType

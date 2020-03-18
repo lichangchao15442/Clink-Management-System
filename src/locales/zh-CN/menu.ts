@@ -1,3 +1,3 @@
 export default {
-    // 'menu.'
+    'menu.business-overview': '经营概况'
 }
