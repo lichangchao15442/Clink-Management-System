@@ -2,19 +2,41 @@ import { Request, Response } from 'express'
 
 let users = [
     {
+        id: '1',
         mobile: '12345678900',
         password: 'admin',
         authority: 'admin',
         name: '李常超',
-        avatar: 'http://img4.imgtn.bdimg.com/it/u=281547385,3214681329&fm=26&gp=0.jpg',
+        avatar: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3550337281,1234656483&fm=15&gp=0.jpg',
+        employeeId: '000001',
+        age: '30',
+        gender: 'male',
+        email: '15442@163.com',
+        idNumber: '311587198909230071',
+        job: '初级医师',
+        address: ["江苏省", "南京市", "玄武区"],
+        addressDetail: '竹山路工信大厦',
+        department: 'general',
+        role: 'doctor'
 
     },
     {
+        id: '2',
         mobile: '12345678901',
         password: 'user',
         authority: 'user',
         name: 'Bentley',
         avatar: 'http://img2.imgtn.bdimg.com/it/u=3252118588,652104148&fm=11&gp=0.jpg',
+        employeeId: '000002',
+        age: '23',
+        gender: 'female',
+        email: '498555427@163.com',
+        idNumber: '53917819970127005x',
+        job: '烧伤科主任',
+        address: ["江苏省", "南京市", "玄武区"],
+        addressDetail: '竹山路工信大厦',
+        department: 'pediatrics',
+        role: 'doctor'
 
     },
 ]
@@ -27,19 +49,10 @@ function getFakeCaptcha(req: Request, res: Response) {
 export default {
     // 支持Object和Array
     'GET /api/currentUser': (req: Request, res: Response) => {
-        const { mobile } = req.query
-        console.log('users', users)
-        const user = users.find(item => item.mobile === mobile)
+        const { id } = req.query
+        const user = users.find(item => item.id === id)
         res.send(user)
     },
-    //  {
-    // name: 'lichangchao',
-    //     avatar: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584110269012&di=6acdc310b374d5f42687b0922740f1c6&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201709%2F10%2F20170910200644_KhWkj.jpeg',
-    //         userid: '00000001',
-    //             email: 'lichangchao@yy.com',
-    //                 signature: '小呆逼',
-    //                     title: '李最火',
-    // },
     'POST /api/login/account': (req: Request, res: Response) => {
         const { mobile, password } = req.body
         const user = users.find(item => {
@@ -48,7 +61,8 @@ export default {
         if (user && user.password === password) {
             res.send({
                 status: 'ok',
-                currentAuthority: user.authority
+                currentAuthority: user.authority,
+                id: user.id
             })
         } else {
             res.send({
@@ -67,7 +81,8 @@ export default {
             user.password = password
             res.send({
                 status: 'ok',
-                currentAuthority: user.authority
+                currentAuthority: user.authority,
+                id: user.id
             })
         } else {
             res.send({
@@ -75,5 +90,20 @@ export default {
                 currentAuthority: 'guest'
             })
         }
+    },
+    'POST /api/account/changeProfile': (req: Request, res: Response) => {
+        const { id } = req.body
+        users = users.map(user => {
+            if (user.id === id) {
+                user = { ...user, ...req.body }
+                return user
+            }
+            return user
+        })
+        const data = users.find(user => user.id === id)
+        res.send({
+            status: 'ok',
+            data
+        })
     }
 }

@@ -76,6 +76,26 @@ const config: IConfig = {
                             component: './business-overview'
                         },
                         {
+                            name: 'account',
+                            path: '/account',
+                            icon: 'user',
+                            hideInMenu: true,
+                            routes: [
+                                {
+                                    name: 'profile',
+                                    icon: 'profile',
+                                    path: '/account/profile',
+                                    component: './account/profile'
+                                },
+                                {
+                                    name: 'change-password',
+                                    icon: 'eye',
+                                    path: '/account/change-password',
+                                    component: './account/change-password'
+                                },
+                            ]
+                        },
+                        {
                             path: '/',
                             redirect: '/business-overview',
                             authority: ['admin', 'user']

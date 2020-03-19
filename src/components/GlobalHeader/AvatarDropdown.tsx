@@ -35,12 +35,12 @@ const AvatarDropdown: React.FC<AvatarDropdownProps> = props => {
     const menuHeaderDropdown = (
         <Menu className={styles.menu} onClick={onMenuClick}>
             {menu && (
-                <Menu.Item key='center'>
+                <Menu.Item key='profile'>
                     账号资料
                 </Menu.Item>
             )}
             {menu && (
-                <Menu.Item key='reset-password'>
+                <Menu.Item key='change-password'>
                     修改密码
                 </Menu.Item>
             )}

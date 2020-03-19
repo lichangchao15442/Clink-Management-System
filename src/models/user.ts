@@ -1,23 +1,38 @@
 import { Effect } from 'dva'
-import { queryCurrent } from '@/services/user'
+import { queryCurrent, changeProfile } from '@/services/user'
 import { Reducer } from 'redux'
+import { message } from 'antd'
+import { formatMessage } from 'umi-plugin-react/locale'
 
 export interface currentUser {
-    avatar?: string;
-    name?: string;
     mobile?: string;
+    password?: string;
+    authority?: string;
+    name?: string;
+    avatar?: string;
+    employeeId?: string;
+    age?: string;
+    gender?: string;
+    email?: string;
+    idNumber?: string;
+    job?: string;
+    address?: string;
+    addressDetail?: string;
+    department?: string;
+    role?: string;
 }
 
 
 export interface UserModelState {
-    currentUser?: currentUser
+    currentUser: currentUser
 }
 
 export interface UserModelType {
     namespace: 'user';
     state: UserModelState;
     effects: {
-        fetchCurrent: Effect
+        fetchCurrent: Effect;
+        changeProfile: Effect
     };
     reducers: {
         saveCurrentUser: Reducer<UserModelState>
@@ -38,6 +53,18 @@ const UserModel: UserModelType = {
                 type: 'saveCurrentUser',
                 payload: response
             })
+        },
+        *changeProfile({ payload }, { call, put }) {
+            const response = yield call(changeProfile, { ...payload, id: localStorage.getItem('id') })
+            if (response.status === 'ok') {
+                message.success(formatMessage({ id: 'save.success' }))
+                // 用户信息改变，头部的个人信息显示也要改变
+                yield put({
+                    type: 'saveCurrentUser',
+                    payload: response.data
+                })
+
+            }
         }
     },
 

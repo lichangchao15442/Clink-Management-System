@@ -7,5 +7,6 @@ export default {
     'userandlogin.password.required': 'Please enter the password!',
     'userandlogin.login.autologin': 'Free login for one month',
     'userandlogin.login.forgetpassword': 'Forget password',
-    'userandlogin.login.login': 'Login'
+    'userandlogin.login.login': 'Login',
+    'userandlogin.status.wrong':'Account or password error!' 
 }

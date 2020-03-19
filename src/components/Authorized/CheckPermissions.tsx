@@ -1,4 +1,8 @@
 import { CURRENT } from './renderAuthorize'
+import { Redirect } from 'umi'
+import React from 'react'
+import { message } from 'antd'
+import { formatMessage } from 'umi-plugin-react/locale'
 
 export type IAuthorityType =
     | undefined
@@ -20,6 +24,11 @@ const checkPermissions = <T, K>(
     target: T,
     Exception: K
 ): T | K | React.ReactNode => {
+    // 如果没有登录，则跳转至登录页面（场景：已登录但是清空cookie或cookie失效）
+    if (!localStorage.getItem('id')) {
+        message.error(formatMessage({id:'login.invalid'}))
+        return <Redirect to='/user/login' />
+    }
     // 没有判定权限，默认查看所有
     if (!authority) {
         console.log('target', target)

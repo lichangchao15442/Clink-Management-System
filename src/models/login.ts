@@ -23,7 +23,7 @@ const Model: ModelProps = {
         logout() {
             const { redirect } = getPageQuery()
             localStorage.removeItem('clinic-authority')
-            localStorage.removeItem('mobile')
+            localStorage.removeItem('id')
             if (window.location.pathname !== '/user/login' && !redirect) {
                 router.replace({
                     pathname: '/user/login',

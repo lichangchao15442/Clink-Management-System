@@ -46,8 +46,8 @@ const Model: ModelType = {
             // 登录成功
             if (response.status === 'ok') {
                 message.success('登录成功！')
-                // 将用户的电话号码存在本地作为查询用户信息的关键值
-                localStorage.setItem('mobile', payload.mobile)
+                // 将用户的id存在本地作为查询用户信息的关键值
+                localStorage.setItem('id', response.id)
                 // 登录进入上一次退出的页面
                 const urlParams = new URL(window.location.href)
                 const params = getPageQuery()
@@ -66,7 +66,7 @@ const Model: ModelType = {
                     }
                 }
                 // 跳转路由
-                yield put(routerRedux.replace(redirect || '/business-overview'))
+                yield put(routerRedux.replace(redirect || '/'))
             }
         }
     },

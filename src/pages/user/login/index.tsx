@@ -48,7 +48,9 @@ const Login: React.FC<LoginProps> = props => {
                 <h1 className={styles.title}>
                     <FormattedMessage id='userandlogin.login.title' /></h1>
                 <LoginForm onSubmit={handleSubmit}>
-                    {status === 'error' && !submitting && (<LoginMessage content='账户或密码错误' />)}
+                    {status === 'error' && !submitting &&
+                        (<LoginMessage content={formatMessage({ id: 'userandlogin.status.wrong' })} />)
+                    }
                     <Mobile
                         name='mobile'
                         placeholder={formatMessage({ id: 'userandlogin.mobile.placeholder' })}

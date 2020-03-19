@@ -7,5 +7,6 @@ export default {
     'userandlogin.password.required': '请输入密码',
     'userandlogin.login.autologin': '一个月内免登陆',
     'userandlogin.login.forgetpassword': '忘记密码',
-    'userandlogin.login.login': '登录'
+    'userandlogin.login.login': '登录',
+    'userandlogin.status.wrong':'账户或密码错误' 
 }

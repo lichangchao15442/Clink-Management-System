@@ -53,7 +53,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         if (dispatch) {
             dispatch({
                 type: 'user/fetchCurrent',
-                payload: localStorage.getItem('mobile')
+                payload: localStorage.getItem('id')
             })
         }
     }, [])
@@ -108,6 +108,21 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
                 }}
                 footerRender={footerRender}
                 rightContentRender={() => <RightContent />}
+                breadcrumbRender={(routes = []) => [
+                    {
+                        path: '/',
+                        breadcrumbName: formatMessage({ id: 'breadcrumb.home' })
+                    },
+                    ...routes
+                ]}
+                itemRender={(route, params, routes, paths) => {
+                    const first = routes.indexOf(route) === 0
+                    return first ? (
+                        <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+                    ) : (
+                            <span>{route.breadcrumbName}</span>
+                        )
+                }}
                 {...settings}
                 {...props}
             >
