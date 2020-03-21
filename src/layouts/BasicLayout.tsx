@@ -93,10 +93,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
                 onCollapse={handleMenuCollapse}
                 menuHeaderRender={(logoDom, titleDom) => {
                     return (
-                        <div className={styles.header}>
-                            <div className={styles.logo}>{logoDom}</div>
-                            <div>{titleDom}</div>
-                        </div>
+                        <Link to='/'>
+                            <div className={styles.header}>
+                                <div className={styles.logo}>{logoDom}</div>
+                                <div>{titleDom}</div>
+                            </div>
+                        </Link>
                     )
                 }}
                 menuDataRender={menuDataRender}

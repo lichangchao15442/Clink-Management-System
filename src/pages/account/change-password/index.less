@@ -1,0 +1,37 @@
+@import '~antd/es/style/themes/default.less';
+
+.saveButton {
+    text-align:right;
+    button {
+        width: 100px;
+        border-radius: 4px;
+        height: 36px;
+        .icon {
+            font-size: 15px
+        }
+    }
+}
+
+.success,
+    .warning,
+    .error {
+        transition: color 0.3s;
+    }
+
+    .success {
+        color:@success-color
+    }
+    .warning {
+        color:@warning-color
+    }
+    .error {
+        color:@error-color
+    }
+
+    .progress-pass > .progress {
+        :global {
+            .ant-progress-bg {
+                background-color: @warning-color;
+            }
+        }
+    }

@@ -11,6 +11,12 @@
       min-width: 160px;
       text-align: center;
     }
+    :global{
+      .ant-dropdown-menu-item:hover,
+      .ant-dropdown-menu-submenu-title:hover{
+        color:@primary-color
+      }
+    }
   }
 
 
@@ -30,7 +36,7 @@
             vertical-align: middle;
         }
         &:hover {
-            background: @pro-header-hover-bg;
+            background: @pro-header-hover-bg
         }
         &:global(.opened) {
             background: @pro-header-hover-bg;
@@ -51,6 +57,7 @@
         }
     }
 }
+
 
 
 @media only screen and (max-width: @screen-md) {

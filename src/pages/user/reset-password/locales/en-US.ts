@@ -19,5 +19,6 @@ export default {
     'resetandpassword.strength.msg': "Please enter at least 6 characters and don't use passwords that are easy to guess.",
     'resetandpassword.password.twice': 'The passwords entered twice do not match!',
     'resetandpassword.captcha.wrong': 'Captcha Wrong!',
-    'resetandpassword.mobile.noAuthority': 'This account does not have authority!'
+    'resetandpassword.mobile.noAuthority': 'This account does not have authority!',
+    'resetandpassword.submit.success': 'Password reset succeeded!'
 }

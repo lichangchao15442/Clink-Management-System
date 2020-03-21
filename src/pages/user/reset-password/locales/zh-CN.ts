@@ -19,5 +19,6 @@ export default {
     'resetandpassword.strength.msg': '请至少输入 6 个字符。请不要使用容易被猜到的密码。',
     'resetandpassword.password.twice': '两次输入的密码不匹配!',
     'resetandpassword.captcha.wrong': '验证码不正确!',
-    'resetandpassword.mobile.noAuthority': '该账号无权限!'
+    'resetandpassword.mobile.noAuthority': '该账号无权限!',
+    'resetandpassword.submit.success': '重置密码成功',
 }

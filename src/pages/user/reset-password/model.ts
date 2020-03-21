@@ -4,6 +4,7 @@ import { routerRedux } from 'dva/router'
 import { message } from 'antd'
 import { resetPassword } from './service'
 import { setAuthority } from '@/utils/authority'
+import { formatMessage } from 'umi-plugin-react/locale'
 
 
 export type Effect = (
@@ -41,7 +42,7 @@ const Model: ModelProps = {
                 payload: response
             })
             if (response.status === 'ok') {
-                message.success('设置密码成功')
+                message.success(formatMessage({ id: 'resetandpassword.submit.success' }))
                 // 将用户的电话号码存在本地作为查询用户信息的关键值
                 localStorage.setItem('id', response.id)
                 yield put(routerRedux.replace('/'))

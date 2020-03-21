@@ -1,0 +1,17 @@
+@import '~antd/es/style/themes/default.less';
+
+.card {
+    :global{
+        .ant-card {
+            box-shadow: @card-shadow;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            .ant-card-head {
+                border-bottom:2px solid #f0f0f0;
+                .ant-card-head-title {
+                    font-weight:700
+                }
+            }
+        }
+    }
+}

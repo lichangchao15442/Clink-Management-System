@@ -1,0 +1,62 @@
+
+.container {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    .info {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .number {
+            font-size: 44px;
+            font-weight: 700;
+            color: rgba(0, 0, 0, 0.8);
+        }
+    
+        .title {
+            color: rgb(102, 102, 102);
+            font-weight: 700;
+            font-size: 13px;
+        }
+    
+        .percent {
+            font-size: 11px;
+            color: rgb(153, 153, 153);
+            span:last-child {
+                margin-right: 4px;
+            }
+            .icon {
+                margin-right: 6px;
+            }
+            .registered {
+                color:#666EE8
+            }
+            .admission {
+                color:#FF6262
+            }
+            .income {
+                color:#28D094
+            }
+            .newVips {
+                color:#FFC71C
+            }
+        }
+    }
+
+    .logo {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        position: relative;
+        img {
+            position: absolute;
+            top: 0px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
+    }
+
+}

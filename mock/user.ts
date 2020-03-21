@@ -91,8 +91,27 @@ export default {
             })
         }
     },
+    'POST /api/change-password': (req: Request, res: Response) => {
+        const { id, newPassword, oldPassword } = req.body
+        let user = users.find(item => {
+            return item.id === id
+        })
+        if (user) {
+            // 进行旧密码的校验
+            if (user.password === oldPassword) {
+                user.password = newPassword
+                res.send({
+                    status: 'ok'
+                })
+            } else {
+                res.send({
+                    status: 'error'
+                })
+            }
+        }
+    },
     'POST /api/account/changeProfile': (req: Request, res: Response) => {
-        const { id } = req.body
+        const { id, oldPassword } = req.body
         users = users.map(user => {
             if (user.id === id) {
                 user = { ...user, ...req.body }
