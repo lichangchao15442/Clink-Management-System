@@ -90,7 +90,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             <ProLayout
                 logo={logo}
                 formatMessage={formatMessage}
-                onCollapse={handleMenuCollapse}
+                // onCollapse={handleMenuCollapse}
                 menuHeaderRender={(logoDom, titleDom) => {
                     return (
                         <Link to='/'>

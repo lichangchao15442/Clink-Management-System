@@ -25,11 +25,4 @@ export default {
     'businessandoverview.outpatientRecords.department': "Department",
     'businessandoverview.outpatientRecords.registeredDoctor': "Registered Doctor",
     'businessandoverview.outpatientRecords.lastUpdateTime': "Last Update Time",
-    'businessandoverview.outpatientRecords.pending': "pending",
-    'businessandoverview.outpatientRecords.consulting': "consulting",
-    'businessandoverview.outpatientRecords.consulted': "consulted",
-    'businessandoverview.outpatientRecords.male': "male",
-    'businessandoverview.outpatientRecords.female': "female",
-    'businessandoverview.outpatientRecords.firstVisit': "first visit",
-    'businessandoverview.outpatientRecords.subsequentVisit': "subsequent visit",
 }

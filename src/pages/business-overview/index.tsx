@@ -1,8 +1,8 @@
 import React, { useEffect, Suspense, useState } from 'react'
-import { GridContent } from '@ant-design/pro-layout'
+import { PageHeaderWrapper } from '@ant-design/pro-layout'
 import { Card, Row, Col } from 'antd'
 import { connect } from 'dva'
-import { formatMessage } from 'umi-plugin-react/locale'
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import { Dispatch } from 'redux'
 
 import registered from '@/assets/registered.png'
@@ -87,7 +87,7 @@ const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
     })
 
     // 对outpatientRecordsData数据的处理
-    outpatientRecordsData.forEach((item, key) => { item.key = key })
+    outpatientRecordsData.forEach((item, key) => { item.key = key + 1 })
 
     const handleTime = (type: string) => {
         setTime(type)
@@ -108,13 +108,19 @@ const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
     }
 
     const outpatientRecordsProps = {
-        data: outpatientRecordsData,
-        loading
+        dataSource: outpatientRecordsData,
+        loading,
+        pagination: {
+            total: outpatientRecordsData.length,
+            showQuickJumper: true,
+            pageSize: 10,
+            showTotal: (total, range) => `每页10条，共${total}条`
+        }
     }
 
 
     return (
-        <GridContent>
+        <PageHeaderWrapper>
             <Card className={styles.card}>
                 <Row gutter={24}>
                     <Suspense fallback={<PageLoading />}>
@@ -141,7 +147,7 @@ const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
                     </Col>
                 </Row>
             </Card>
-        </GridContent>
+        </PageHeaderWrapper>
     )
 }
 

@@ -1,0 +1,17 @@
+export default {
+    'dataanddictionary.gender.male': '男',
+    'dataanddictionary.gender.female': '女',
+    'dataanddictionary.visitStatus.pending': '待接诊',
+    'dataanddictionary.visitStatus.consulting': '接诊中',
+    'dataanddictionary.visitStatus.consulted': '已接诊',
+    'dataanddictionary.outpatientType.firstVisit': '初诊',
+    'dataanddictionary.outpatientType.subsequentVisit': '复诊',
+    'dataanddictionary.department.general': '全科',
+    'dataanddictionary.department.pediatrics': '儿科',
+    'dataanddictionary.department.orthopedics': '骨科',
+    'dataanddictionary.role.admin': '管理员',
+    'dataanddictionary.role.doctor': '医生',
+    'dataanddictionary.role.nurse': '护士',
+    'dataanddictionary.role.frontdesk': '前台',
+    'dataanddictionary.role.finance': '财务',
+}

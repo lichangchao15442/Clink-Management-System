@@ -59,6 +59,7 @@ export interface MemberSpendingProps {
 }
 
 export interface OutpatientRecordsProps {
-    data: outpatientRecordsDataType[];
-    loading: boolean
+    dataSource: outpatientRecordsDataType[];
+    loading?: boolean;
+    pagination?: any;
 }

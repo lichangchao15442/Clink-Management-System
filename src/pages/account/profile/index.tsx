@@ -8,6 +8,7 @@ import { Dispatch } from 'redux'
 import { ValidateErrorEntity, InternalNamePath } from 'rc-field-form/es/interface'
 
 import areaTree from '@/utils/city'
+import { departments, roles } from '@/utils/dataDictionary'
 import { currentUser as currentUserState, UserModelState } from '@/models/user'
 
 import styles from './index.less'
@@ -31,51 +32,7 @@ const fieldLabels = {
 }
 
 
-const departments = [
-    {
-        id: '0001001',
-        label: formatMessage({ id: 'account.profile.department.general' }),
-        value: 'general'
-    },
-    {
-        id: '0001002',
-        label: formatMessage({ id: 'account.profile.department.pediatrics' }),
-        value: 'pediatrics'
-    },
-    {
-        id: '0001003',
-        label: formatMessage({ id: 'account.profile.department.orthopedics' }),
-        value: 'orthopedics'
-    },
-]
 
-const roles = [
-    {
-        id: '000001',
-        label: formatMessage({ id: 'account.profile.role.admin' }),
-        value: 'admin'
-    },
-    {
-        id: '000002',
-        label: formatMessage({ id: 'account.profile.role.doctor' }),
-        value: 'doctor'
-    },
-    {
-        id: '000003',
-        label: formatMessage({ id: 'account.profile.role.nurse' }),
-        value: 'nurse'
-    },
-    {
-        id: '000004',
-        label: formatMessage({ id: 'account.profile.role.frontdesk' }),
-        value: 'frontdesk'
-    },
-    {
-        id: '000005',
-        label: formatMessage({ id: 'account.profile.role.finance' }),
-        value: 'finance'
-    },
-]
 
 interface ProfileProps {
     currentUser: currentUserState;
@@ -137,8 +94,8 @@ const Profile: React.FC<ProfileProps> = props => {
                     trigger='click'
                     content={errorList}
                     overlayClassName={styles.errorPopover}
-                    getPopupContainer={(trigger:HTMLElement) => {
-                        if(trigger && trigger.parentNode) {
+                    getPopupContainer={(trigger: HTMLElement) => {
+                        if (trigger && trigger.parentNode) {
                             return trigger.parentNode as HTMLElement
                         }
                         return trigger
@@ -209,10 +166,10 @@ const Profile: React.FC<ProfileProps> = props => {
                             >
                                 <Select>
                                     <Option value="male">
-                                        <FormattedMessage id='account.profile.gender.male' />
+                                        <FormattedMessage id='dataanddictionary.gender.male' />
                                     </Option>
                                     <Option value="female">
-                                        <FormattedMessage id='account.profile.gender.female' />
+                                        <FormattedMessage id='dataanddictionary.gender.female' />
                                     </Option>
                                 </Select>
                             </Form.Item>
@@ -283,8 +240,8 @@ const Profile: React.FC<ProfileProps> = props => {
                                 rules={[{ required: true, message: formatMessage({ id: 'account.profile.department.required' }) }]}
                             >
                                 <Select>
-                                    {departments && departments.map(item => (
-                                        <Option key={item.id} value={item.value}>
+                                    {departments.map(item => (
+                                        <Option key={item.key} value={item.value}>
                                             {item.label}
                                         </Option>
                                     ))}
@@ -298,8 +255,8 @@ const Profile: React.FC<ProfileProps> = props => {
                                 rules={[{ required: true, message: formatMessage({ id: 'account.profile.role.required' }) }]}
                             >
                                 <Select mode="multiple">
-                                    {roles && roles.map(item => (
-                                        <Option key={item.id} value={item.value}>
+                                    {roles.map(item => (
+                                        <Option key={item.key} value={item.value}>
                                             {item.label}
                                         </Option>
                                     ))}

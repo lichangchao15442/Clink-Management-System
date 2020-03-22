@@ -25,11 +25,4 @@ export default {
     'businessandoverview.outpatientRecords.department': '科室',
     'businessandoverview.outpatientRecords.registeredDoctor': '挂号医生',
     'businessandoverview.outpatientRecords.lastUpdateTime': '最后更新时间',
-    'businessandoverview.outpatientRecords.pending': '待接诊',
-    'businessandoverview.outpatientRecords.consulting': '接诊中',
-    'businessandoverview.outpatientRecords.consulted': '已接诊',
-    'businessandoverview.outpatientRecords.male': '男',
-    'businessandoverview.outpatientRecords.female': '女',
-    'businessandoverview.outpatientRecords.firstVisit': '初诊',
-    'businessandoverview.outpatientRecords.subsequentVisit': '复诊',
 }

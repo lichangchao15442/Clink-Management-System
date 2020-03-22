@@ -56,16 +56,16 @@ const memberSpendingData = [
 ]
 
 const outpatientRecords = Mock.mock({
-    'data|20-30': [
+    'data|50-70': [
         {
             'id|+1': 100000,
-            'visitStatus|0-2': 1,
+            'visitStatus|10000200-10000202': 1,
             patientName: '@cname()',
             'gender|0-1': 1,
             'age|1-99': 1,
             'mobile': /^1[385][1-9]\d{8}/,
-            'outpatientType|0-1': 1,
-            'department|0-2': 1,
+            'outpatientType|10000300-10000301': 1,
+            'department|10000000-10000002': 1,
             registeredDoctor: '@cname()',
             lastUpdateTime: '@datetime()'
         }
@@ -76,7 +76,7 @@ const getFakeOverviewData = {
     introduceData,
     incomeTrendWeek: incomeTrendWeek.data,
     memberSpendingData,
-    outpatientRecordsData:outpatientRecords.data
+    outpatientRecordsData: outpatientRecords.data
 }
 
 export default {

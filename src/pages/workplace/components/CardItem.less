@@ -1,0 +1,93 @@
+@import '~antd/es/style/themes/default.less';
+
+
+
+.cardItem {
+    :global {
+        .ant-card {
+            box-shadow: @card-shadow;
+            margin-bottom: 24px;
+            border-radius: 16px;
+            
+            .ant-card-actions > li:hover {
+                margin: 0;
+                padding: 12px 0;
+                background: @primary-color;
+                color: #fff;
+            }
+            .ant-card-actions {
+                border-bottom-left-radius: 16px;
+                border-bottom-right-radius: 16px;
+                background:#fff;
+                li:first-child {
+                    color: @primary-color;
+                }
+                li:first-child:hover{
+                    border-bottom-left-radius: 16px;
+                }
+                li:last-child:hover{
+                    border-bottom-right-radius: 16px;
+                }
+                li > span:hover {
+                    color: #fff;
+                    transition: all 0.3s;
+                }
+            }
+        }
+    }
+}
+
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color:#999999;
+    font-size: 14px;
+    font-weight: 400;
+
+    .patientName {
+        color: #333;
+        font-weight: 700;
+        font-size: 15px;
+    }
+
+    .vip {
+        color: rgb(255, 199, 28);
+        font-size: 12px;
+        font-weight: 700;
+        font-style: oblique;
+    }
+
+    .visitStatusBtn {
+        width: 52px;
+        height: 24px;
+        font-size: 12px;
+        border-radius: 14px;
+        border: none;
+        background: pink;
+        color: #fff;
+        padding: 0;
+    }
+
+    .pending {
+        background: rgba(255, 98, 98, 1);
+    }
+    .consulting {
+        background: rgba(40, 208, 148, 1);
+    }
+    .consulted {
+        background: rgba(204, 204, 204, 1);
+    }
+
+   
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+
+    span {
+        padding:2px 0;
+    }
+}

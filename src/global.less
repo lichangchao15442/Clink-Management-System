@@ -1,3 +1,6 @@
+@import '~antd/es/style/themes/default.less';
+
+
 html, body, #root {
   height: 100%;
 }
@@ -9,4 +12,8 @@ body {
 .ant-form-item-explain,
  .ant-form-item-extra{
   font-size: 12px;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  color: @primary-color;
 }

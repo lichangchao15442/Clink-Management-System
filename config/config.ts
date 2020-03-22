@@ -76,6 +76,12 @@ const config: IConfig = {
                             component: './business-overview'
                         },
                         {
+                            name: 'workplace',
+                            icon: 'appstore',
+                            path: '/workplace',
+                            component: './workplace'
+                        },
+                        {
                             name: 'account',
                             path: '/account',
                             icon: 'user',

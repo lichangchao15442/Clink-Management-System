@@ -1,0 +1,17 @@
+export default {
+    'dataanddictionary.gender.male': 'Male',
+    'dataanddictionary.gender.female': 'Female',
+    'dataanddictionary.visitStatus.pending': 'Pending',
+    'dataanddictionary.visitStatus.consulting': 'Consulting',
+    'dataanddictionary.visitStatus.consulted': 'Consulted',
+    'dataanddictionary.outpatientType.firstVisit': 'First Visit',
+    'dataanddictionary.outpatientType.subsequentVisit': 'Subsequent Visit',
+    'dataanddictionary.department.general': 'General',
+    'dataanddictionary.department.pediatrics': 'Pediatrics',
+    'dataanddictionary.department.orthopedics': 'Orthopedics',
+    'dataanddictionary.role.admin': 'Admin',
+    'dataanddictionary.role.doctor': 'Doctor',
+    'dataanddictionary.role.nurse': 'Nurse',
+    'dataanddictionary.role.frontdesk': 'Frontdesk',
+    'dataanddictionary.role.finance': 'Finance',
+}
