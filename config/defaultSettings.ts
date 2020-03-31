@@ -43,9 +43,9 @@ export default {
     primaryColor: 'rgba(102, 110, 232, 1)',
     layout: 'sidemenu',
     contentWidth: 'Fluid',
-    fixedHeader: false,
+    fixedHeader: true,
     autoHideHeader: false,
-    fixSiderbar: false,
+    fixSiderbar: true,
     colorWeak: false,
     menu: {
         locale: true

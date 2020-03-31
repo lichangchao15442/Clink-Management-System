@@ -1,7 +1,7 @@
+import { AnyAction, Reducer } from 'redux'
+import { EffectsCommandMap, Subscription } from 'dva'
 import { fakeData, fakeIncomeTrendData } from './service'
 import { StateType } from './data'
-import { AnyAction, Reducer } from 'redux'
-import { EffectsCommandMap } from 'dva'
 
 
 export type Effect = (
@@ -18,6 +18,9 @@ interface ModelType {
     };
     reducers: {
         save: Reducer<StateType>
+    };
+    subscriptions: {
+        setup: Subscription
     }
 }
 
@@ -33,7 +36,7 @@ const Model: ModelType = {
     },
 
     effects: {
-        *fetch({ payload }, { call, put }) {
+        *fetch(_, { call, put }) {
             const response = yield call(fakeData)
             yield put({
                 type: 'save',
@@ -55,6 +58,17 @@ const Model: ModelType = {
                 ...state,
                 ...payload
             }
+        }
+    },
+    subscriptions: {
+        setup({ history, dispatch }): void {
+            history.listen(({ pathname }): void => {
+                if (pathname === '/business-overview') {
+                    dispatch({
+                        type: 'fetch'
+                    })
+                }
+            })
         }
     }
 

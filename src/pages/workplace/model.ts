@@ -1,6 +1,8 @@
 import { AnyAction, Reducer } from 'redux'
-import { EffectsCommandMap } from 'dva'
+import { EffectsCommandMap, Subscription } from 'dva'
+import { parse } from 'qs'
 import { queryOutpatientRecords } from './service'
+import { ModelState } from './data'
 
 type Effects = (
     action: AnyAction,
@@ -12,30 +14,16 @@ interface ModelType {
     state: {};
     effects: {
         fetch: Effects
-    }
+    };
     reducers: {
         save: Reducer<ModelState>
+    };
+    subscriptions: {
+        setup: Subscription
     }
+
 }
 
-export interface outpatientRecordsType {
-    id: number;
-    avatar: string;
-    patientName: string;
-    vipLevel: number;
-    gender: number;
-    age: number;
-    visitStatus: number;
-    createTime: string;
-    department: number;
-    doctorName: string;
-    mobile: string;
-}
-
-export interface ModelState {
-    outpatientRecordsList: outpatientRecordsType[];
-    total: number
-}
 
 const Model: ModelType = {
     namespace: 'workplace',
@@ -62,6 +50,20 @@ const Model: ModelType = {
                 outpatientRecordsList: payload.data,
                 total: payload.total
             }
+        }
+    },
+
+    subscriptions: {
+        setup({ history, dispatch }): void {
+            history.listen(({ pathname, search}): void => {
+                if (pathname === '/workplace') {
+                    const query = parse(search.split('?')[1])
+                    dispatch({
+                        type: 'fetch',
+                        payload: query
+                    })
+                }
+            })
         }
     }
 }

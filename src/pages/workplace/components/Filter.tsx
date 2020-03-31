@@ -1,82 +1,99 @@
-import React from 'react'
-import { Row, Col, DatePicker, Select, Input, Form } from 'antd'
-import moment from 'moment'
+import React, { useEffect } from 'react'
+import { Row, Col, Form } from 'antd'
 import { formatMessage } from 'umi-plugin-react/locale'
+import moment from 'moment'
 
 import { visitStatus } from '@/utils/dataDictionary'
-import styles from './Filter.less'
+import RangePickerFilter from '@/components/FilterItem/RangePickerFilter'
+import SelectFilter from '@/components/FilterItem/SelectFilter'
+import SearchFilter from '@/components/FilterItem/SearchFilter'
+import { strDateToMoment } from '@/utils/utils'
 
-const { RangePicker } = DatePicker
-const { Option } = Select
-const { Search } = Input
-const FormItem = Form.Item
 
 const colProps = {
     style: { marginBottom: 10 }
 }
 
-const ranges = {
-    '今天': [moment(), moment()],
-    '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    '近三天': [moment().subtract(2, 'days'), moment()],
-    '近一周': [moment().subtract(1, 'weeks'), moment()],
-    '近两周': [moment().subtract(2, 'weeks'), moment()],
-    '近三周': [moment().subtract(3, 'weeks'), moment()],
-    '最近一个月': [moment().subtract(1, 'months'), moment()],
-    '近两个月': [moment().subtract(2, 'months'), moment()],
+interface FilterProps {
+    onFilterChange: ({ createTime, visitStatus, patientName }:
+        {
+            createTime?: [string, string],
+            visitStatus?: string,
+            patientName?: string | null
+        }) => void;
+    filters: {
+        createTime?: any,
+        visitStatus?: string | number,
+        patientName?: string | null
+    }
 }
 
-const Filter = ({ onFilterChange }) => {
+
+const Filter: React.FC<FilterProps> = ({ onFilterChange, filters }) => {
     const [form] = Form.useForm()
+    const { setFieldsValue } = form
+
     const visitStatusOptions = [
         { key: 11111111, label: formatMessage({ id: 'commonandfields.all' }), value: 'all' },
         ...visitStatus,
     ]
 
-    const handleCreateTime = (dates, dateString: [string, string]) => {
-        const { getFieldsValue } = form
-        const fields = getFieldsValue()
-        fields.createTime = dateString
-        onFilterChange(fields)
+    // 由路由中的参数设置过滤中的值（防止出现路由中有值，过滤表单中无值）
+    const initValues = {
+        ...filters
+    }
+    const initCreateTimes = strDateToMoment(filters.createTime)
+    initValues.createTime = initCreateTimes
+    initValues.visitStatus = filters.visitStatus ? Number(filters.visitStatus) : visitStatusOptions[0].key
+    useEffect(() => {
+        setFieldsValue(initValues)
+    }, [initValues])
+
+
+
+    const handleFields = (fields: any) => {
+        const { createTime } = fields
+        const newFields = { ...fields }
+        if (createTime && createTime.length) {
+            newFields.createTime = [
+                moment(createTime[0]).format('YYYY-MM-DD'),
+                moment(createTime[1]).format('YYYY-MM-DD'),
+            ]
+        }
+        newFields.patientName = fields.patientName ? fields.patientName.replace(/\s*/g, "") : null
+        return newFields
     }
 
     const handleFilterChange = () => {
         const { getFieldsValue } = form
         const fields = getFieldsValue()
-        fields.patientName = fields.patientName.replace(/\s*/g, "")
-        onFilterChange(fields)
+        const newFields = handleFields(fields)
+        onFilterChange(newFields)
     }
     return (
         <Form form={form}>
             <Row gutter={24}>
                 <Col xs={24} sm={14} md={12} lg={9} {...colProps}>
-                    <FormItem name='createTime' label={formatMessage({ id: 'commonandfields.createTime' })}>
-                        <RangePicker
-                            className={styles.rangePick}
-                            ranges={ranges}
-                            onChange={handleCreateTime}
-                        />
-                    </FormItem>
+                    <RangePickerFilter
+                        name='createTime'
+                        label={formatMessage({ id: 'commonandfields.createTime' })}
+                        onChange={handleFilterChange}
+                    />
                 </Col>
                 <Col xs={24} sm={7} md={8} lg={6} {...colProps}>
-                    <FormItem name='visitStatus' label={formatMessage({ id: 'commonandfields.visitStatus' })}>
-                        <Select
-                            defaultValue={visitStatusOptions[0].label}
-                            style={{ width: 120 }}
-                            onChange={handleFilterChange} >
-                            {visitStatusOptions.map(item =>
-                                <Option key={item.key} value={item.key}>{item.label}</Option>
-                            )}
-                        </Select>
-                    </FormItem>
+                    <SelectFilter
+                        name='visitStatus'
+                        label={formatMessage({ id: 'commonandfields.visitStatus' })}
+                        options={visitStatusOptions}
+                        onChange={handleFilterChange}
+                    />
                 </Col>
                 <Col xs={24} sm={10} md={8} lg={8} {...colProps}>
-                    <FormItem name='patientName'>
-                        <Search
-                            placeholder={formatMessage({ id: 'workplace.filter.enterName' })}
-                            onSearch={handleFilterChange}
-                            enterButton />
-                    </FormItem>
+                    <SearchFilter
+                        name='patientName'
+                        placeholder={formatMessage({ id: 'workplace.filter.enterName' })}
+                        onSearch={handleFilterChange}
+                    />
                 </Col>
             </Row>
         </Form>

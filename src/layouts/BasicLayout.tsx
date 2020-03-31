@@ -66,11 +66,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         })
     )
 
-    const footerRender: BasicLayoutProps['footerRender'] = () => {
-        return (
+    const footerRender: BasicLayoutProps['footerRender'] = () => (
             <DefaultFooter copyright='2020 by小呆逼的听众盆友' links={false} />
         )
-    }
 
     const handleMenuCollapse = (payload: boolean): void => {
         if (dispatch) {
@@ -90,17 +88,15 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             <ProLayout
                 logo={logo}
                 formatMessage={formatMessage}
-                // onCollapse={handleMenuCollapse}
-                menuHeaderRender={(logoDom, titleDom) => {
-                    return (
+                onCollapse={handleMenuCollapse}
+                menuHeaderRender={(logoDom, titleDom) => (
                         <Link to='/'>
                             <div className={styles.header}>
                                 <div className={styles.logo}>{logoDom}</div>
                                 <div>{titleDom}</div>
                             </div>
                         </Link>
-                    )
-                }}
+                    )}
                 menuDataRender={menuDataRender}
                 menuItemRender={(menuItemProps, defaultDom) => {
                     if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {

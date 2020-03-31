@@ -1,0 +1,154 @@
+import React from 'react'
+import { Card, Row, Col, Form, Input, Select } from 'antd'
+import { formatMessage } from 'umi-plugin-react/locale'
+import { departments, outpatientTypes } from '@/utils/dataDictionary'
+import { RegisteredInfoProps } from '../data'
+
+const { Option } = Select
+
+const fieldLabels = {
+    registeredNumber: formatMessage({ id: 'registrationandmanagement.addandregistered.registeredNumber' }),
+    department: formatMessage({ id: 'commonandfields.department' }),
+    outpatientType: formatMessage({ id: 'commonandfields.outpatientType' }),
+    admissionDoctor: formatMessage({ id: 'registrationandmanagement.addandregistered.admissionDoctor' }),
+    registrationFee: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee' }),
+    medicalFee: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee' }),
+    registeredDate: formatMessage({ id: 'registrationandmanagement.addandregistered.registeredDate' }),
+    registrar: formatMessage({ id: 'registrationandmanagement.addandregistered.registrar' }),
+
+}
+
+const registrationFeeOptions = [
+    {
+        key: 0,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.free' }),
+        value: 'free'
+    },
+    {
+        key: 1,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.normal' }),
+        value: 'normal'
+    },
+    {
+        key: 2,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.expert' }),
+        value: 'expert'
+    },
+]
+
+const medicalFeeOptions = [
+    {
+        key: 0,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.free' }),
+        value: 'free'
+    },
+    {
+        key: 1,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.notFree' }),
+        value: 'notFree'
+    },
+]
+
+
+const RegisteredInfo = ({  doctors,loading }: RegisteredInfoProps) => (
+        <Card
+            bordered={false}
+            style={{ background: '#EEEFFB' }}
+            loading={loading}
+        >
+            <Row gutter={16}>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.registeredNumber}
+                        name="registeredNumber"
+                    >
+                        <Input disabled />
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.department}
+                        name="department"
+                        rules={[{ required: true, message: formatMessage({ id: 'commonandfields.pleaseSelect' }) }]}
+                    >
+                        <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                            {departments.map(item =>
+                                <Option key={item.key} value={item.key}>{item.label}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.outpatientType}
+                        name="outpatientTypes"
+                        rules={[{ required: true, message: formatMessage({ id: 'commonandfields.pleaseSelect' }) }]}
+                    >
+                        <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                            {outpatientTypes.map(item =>
+                                <Option key={item.key} value={item.key}>{item.label}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.admissionDoctor}
+                        name="admissionDoctor"
+                        rules={[{ required: true, message: formatMessage({ id: 'commonandfields.pleaseSelect' }) }]}
+                    >
+                        <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                            {doctors.length && doctors.map(item =>
+                                <Option key={item.id} value={item.id}>{item.name}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={16}>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.registrationFee}
+                        name="registrationFee"
+                        rules={[{ required: true, message: formatMessage({ id: 'commonandfields.pleaseSelect' }) }]}
+                    >
+                        <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                            {registrationFeeOptions.map(item =>
+                                <Option key={item.key} value={item.value}>{item.label}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.medicalFee}
+                        name="medicalFee"
+                    >
+                        <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                            {medicalFeeOptions.map(item =>
+                                <Option key={item.key} value={item.value}>{item.label}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.registeredDate}
+                        name="registeredDate"
+                    >
+                        <Input disabled />
+                    </Form.Item>
+                </Col>
+                <Col lg={6} md={12} sm={24}>
+                    <Form.Item
+                        label={fieldLabels.registrar}
+                        name="registrar"
+                    >
+                        <Input disabled />
+                    </Form.Item>
+                </Col>
+            </Row>
+        </Card>
+    )
+
+export default RegisteredInfo

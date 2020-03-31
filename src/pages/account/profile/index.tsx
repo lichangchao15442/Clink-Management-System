@@ -118,7 +118,7 @@ const Profile: React.FC<ProfileProps> = props => {
             <PageHeaderWrapper>
                 <Card bordered={false}>
                     <Row gutter={16}>
-                        <div className={styles.saveButton}>
+                        <div className='top-right-button'>
                             {getErrorInfo(error)}
                             <Button
                                 htmlType='submit'

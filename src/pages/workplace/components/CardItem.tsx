@@ -8,8 +8,11 @@ import styles from './CardItem.less'
 
 const { Meta } = Card
 
-const CardItem = ({ item }) => {
-    return (
+interface CardItem {
+    item: any;
+}
+
+const CardItem: React.FC<CardItem> = ({ item }) => (
         <div className={styles.cardItem} >
             <Card
                 bordered={false}
@@ -56,6 +59,5 @@ const CardItem = ({ item }) => {
             </Card>
         </div>
     )
-}
 
 export default CardItem

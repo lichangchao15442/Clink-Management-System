@@ -1,0 +1,55 @@
+@import '~antd/es/style/themes/default.less';
+
+
+
+.main {
+    :global {
+        .ant-card-head {
+            border-bottom: unset;
+        }
+        .ant-table thead > tr > th {
+            background: #C2C5F6;
+        }
+    }
+
+
+    .title::before {
+        display: inline-block;
+        content: '';
+        width: 6px;
+        height: 19px;
+        margin: 0 6px 0 0;
+        background: @primary-color;
+    }
+    
+    .title {
+        font-weight: 700;
+        span {
+            position: absolute;
+            margin-top: -3px;
+        }
+    }
+
+    .addFamilyMember {
+        height:200px;
+        text-align: center;
+        padding-top: 40px;
+        button {
+            width: 150px;
+            height: 44px;
+            border-radius: 4px;
+            background: #28D094;
+            color: #fff;
+            border:none;
+            span:first-child {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .operate {
+        a {
+            margin-right: 6px;
+        }
+    }
+}

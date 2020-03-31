@@ -36,7 +36,7 @@ export interface UserModelType {
     };
     reducers: {
         saveCurrentUser: Reducer<UserModelState>
-    }
+    };
 }
 
 const UserModel: UserModelType = {
@@ -70,12 +70,13 @@ const UserModel: UserModelType = {
 
     reducers: {
         saveCurrentUser(state, action) {
+            localStorage.setItem('currentUserName', action.payload.name)
             return {
                 ...state,
                 currentUser: action.payload || {}
             }
         }
-    }
+    },
 }
 
 export default UserModel

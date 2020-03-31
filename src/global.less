@@ -17,3 +17,47 @@ body {
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   color: @primary-color;
 }
+
+.top-right-button  {
+  width: 100%;
+  text-align: right;
+  button {
+    width: 100px;
+    border-radius: 4px;
+    height: 34px;
+        .icon {
+            font-size: 15px
+        }
+  }
+}
+
+.card-title {
+  :global {
+      .ant-card-head {
+          padding: 0 12px;
+      }
+      .ant-card-head-title {
+          font-size: 24px;
+          font-weight: 700;
+          color: @primary-color;
+      }
+  }
+}
+
+.modal-no-border {
+  :global {
+      .ant-modal-title {
+          font-weight: 700;
+      }
+      .ant-modal-header{
+          border-bottom: none;
+      }
+      .ant-modal-body {
+          padding: 0 24px 12px 24px;
+      }
+      .ant-modal-footer {
+          border-top:none;
+      }
+  }
+
+}

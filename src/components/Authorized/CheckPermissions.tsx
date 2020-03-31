@@ -1,8 +1,8 @@
-import { CURRENT } from './renderAuthorize'
 import { Redirect } from 'umi'
 import React from 'react'
 import { message } from 'antd'
 import { formatMessage } from 'umi-plugin-react/locale'
+import { CURRENT } from './renderAuthorize'
 
 export type IAuthorityType =
     | undefined
@@ -31,7 +31,6 @@ const checkPermissions = <T, K>(
     }
     // 没有判定权限，默认查看所有
     if (!authority) {
-        console.log('target', target)
         return target
     }
 

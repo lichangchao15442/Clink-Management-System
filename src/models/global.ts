@@ -1,5 +1,4 @@
 import { Reducer } from 'redux'
-import { Effect } from 'dva'
 
 export interface GlobalModelState {
     collapsed: boolean;
@@ -18,7 +17,7 @@ const GlobalModel: GlobalModelProps = {
     namespace: 'global',
 
     state: {
-        collapsed: true,
+        collapsed: false,
     },
 
     // effects: {},

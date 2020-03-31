@@ -1,12 +1,15 @@
 import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'
+import webpackPlugin from './plugin.config'
 
 
 const plugins: IPlugin[] = [
     ['umi-plugin-antd-icon-config', {}],
     ['umi-plugin-react', {
         antd: true,
-        dva: true,
+        dva: {
+            hmr: true,
+        },
         title: 'clinic-management-system',
         dll: false,
         locale: {
@@ -82,6 +85,30 @@ const config: IConfig = {
                             component: './workplace'
                         },
                         {
+                            name: 'registration-management',
+                            icon: 'form',
+                            path: '/registration-management',
+                            routes: [
+                                {
+                                    name: 'add-registered',
+                                    path: '/registration-management/add-registered',
+                                    component: './registration-management/add-registered'
+                                },
+                            ]
+                        },
+                        {
+                            name: 'patient-management',
+                            icon: 'user',
+                            path: '/patient-management',
+                            component: './patient-management',
+                        },
+                        {
+                            name: 'add-patient',
+                            path: '/patient-management/add-patient',
+                            component: './patient-management/add-patient',
+                            hideInMenu: true,
+                        },
+                        {
                             name: 'account',
                             path: '/account',
                             icon: 'user',
@@ -133,7 +160,8 @@ const config: IConfig = {
     // },
     lessLoaderOptions: {
         javascriptEnabled: true
-    }
+    },
+    // chainWebpack: webpackPlugin,
 }
 
 export default config;

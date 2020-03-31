@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import Mock from 'mockjs'
 
+import { outpatientRecordsType } from './data'
+
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
 }
@@ -50,11 +52,6 @@ const outpatientRecords = Mock.mock({
     ]
 })
 
-interface queryType {
-    createTime: string[];
-    visitStatus: number;
-    patientName: string;
-}
 
 export default {
     '/api/queryOutpatientRecords': (req: Request, res: Response) => {
@@ -62,7 +59,7 @@ export default {
         let newData = outpatientRecords.data
         Object.keys(query).forEach(key => {
             if ({}.hasOwnProperty.call(query, key)) {
-                newData = newData.filter((item: queryType) => {
+                newData = newData.filter((item: outpatientRecordsType) => {
                     if (key === 'createTime') {
                         const start = new Date(query[key][0]).getTime()
                         const end = new Date(query[key][1]).getTime()
@@ -73,13 +70,14 @@ export default {
                         }
                         return true
                     } if (key === 'visitStatus') {
-                        const bool = query[key] == 11111111 ? true : item[key] == query[key]
+                        const bool = Number(query[key]) === 11111111 ? true : item[key] === Number(query[key])
                         return bool
 
                     } if (key === 'patientName') {
                         const bool = query[key] ? item[key] === query[key] : true
                         return bool
                     }
+                    return false
                 })
             }
         })

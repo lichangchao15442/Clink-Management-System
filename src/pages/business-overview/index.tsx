@@ -1,8 +1,8 @@
-import React, { useEffect, Suspense, useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { PageHeaderWrapper } from '@ant-design/pro-layout'
 import { Card, Row, Col } from 'antd'
 import { connect } from 'dva'
-import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
+import { formatMessage } from 'umi-plugin-react/locale'
 import { Dispatch } from 'redux'
 
 import registered from '@/assets/registered.png'
@@ -54,23 +54,26 @@ interface BusinessOverviewProps {
 
 const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
     const { businessOverview, loading, dispatch } = props
-    const { introduceData, incomeTrendWeek, incomeTrendMonth, memberSpendingData, outpatientRecordsData } = businessOverview
+    const {
+        incomeTrendWeek,
+        incomeTrendMonth,
+        memberSpendingData,
+    } = businessOverview
+    let { introduceData, outpatientRecordsData } = businessOverview
     const [time, setTime] = useState('week')
 
 
-    useEffect(() => {
-        dispatch({
-            type: 'businessOverview/fetch'
-        })
-    }, [])
-
     // 对introduceData数据处理
-    introduceData.forEach((item: introduceRowProps) => {
+    introduceData = introduceData.map(item => {
         const title = formatMessage({ id: `businessandoverview.introduce.${item.name}` })
-        item.title = title
-        item.logoSrc = cardLogosSrc[item.name]
-        item.logoColor = cardLogosColor[item.name]
+        return {
+            ...item,
+            title,
+            logoSrc: cardLogosSrc[item.name],
+            logoColor: cardLogosColor[item.name]
+        }
     })
+
     const IntroduceRows = introduceData.map((item: introduceRowProps) => (
         <Col key={item.name} {...topColResponsiveProps} >
             <IntroduceRow loading={loading} {...item} />
@@ -87,7 +90,12 @@ const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
     })
 
     // 对outpatientRecordsData数据的处理
-    outpatientRecordsData.forEach((item, key) => { item.key = key + 1 })
+    outpatientRecordsData = outpatientRecordsData.map((item, index) => ({
+        ...item,
+        key: index + 1
+    }))
+
+    // outpatientRecordsData.forEach((item, key) => { item.key = key + 1 })
 
     const handleTime = (type: string) => {
         setTime(type)
@@ -114,7 +122,7 @@ const BusinessOverview: React.FC<BusinessOverviewProps> = props => {
             total: outpatientRecordsData.length,
             showQuickJumper: true,
             pageSize: 10,
-            showTotal: (total, range) => `每页10条，共${total}条`
+            showTotal: (total: number) => `每页10条，共${total}条`
         }
     }
 
