@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { PageHeaderWrapper } from '@ant-design/pro-layout'
 import { Card, Button, Form } from 'antd'
 import { PayCircleFilled } from '@ant-design/icons'
@@ -8,11 +8,11 @@ import moment from 'moment'
 import { Dispatch } from 'redux'
 
 import { randomNumber } from '@/utils/utils'
-import { ageUnits } from '@/utils/dataDictionary'
+import { ageUnits, registrationFeeOptions, medicalFeeOptions } from '@/utils/dataDictionary'
 import RegisteredInfo from './components/RegisteredInfo'
 import PatientInfo from './components/PatientInfo'
 import RegisteredFee from './components/RegisteredFee'
-import { StateType } from './data'
+import { StateType, AddRegisteredFieldsType, RegisteredFeeFieldsType } from './data'
 import { patientManagementState } from '../../patient-management/data'
 
 import styles from './index.less'
@@ -30,7 +30,6 @@ interface AddRegisteredProps {
 }
 
 
-// const registeredDate = moment().format('YYYY-MM-DD')
 
 const AddRegistered: React.FC<AddRegisteredProps> = props => {
     const [form] = Form.useForm()
@@ -39,11 +38,7 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
     const { doctors } = addRegistered
     const { patients: Patients } = patients
     const [visible, setVisible] = useState(false)
-    const total = useRef(150)
-    const [discount, setDiscount] = useState(10)
-    const [discountedPrice, setDiscountedPrice] = useState(0)
-    const [medicarePayment, setMedicarePayment] = useState(0)
-    const [actualMoney, setActualMoney] = useState(total.current)
+    const [amountReceivable, setAmountReceivable] = useState(0)
 
     const initialValues = {
         registeredNumber: randomNumber(),
@@ -51,17 +46,6 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
         registrar: localStorage.getItem('currentUserName')
     }
 
-    const clearModalValues = () => {
-        setDiscount(10)
-        setDiscountedPrice(0)
-        setMedicarePayment(0)
-        setActualMoney(total.current)
-    }
-
-    useEffect(() => {
-        const money = total.current - discountedPrice - medicarePayment
-        setActualMoney(Number(money.toFixed(2)))
-    }, [discountedPrice, medicarePayment])
 
     // 处理patients数据
     const newPatients = Patients && Patients.map(item => {
@@ -87,54 +71,21 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
         }
     }
 
-    // 手动处理优惠金额，改变折扣
-    const handleDiscountedPrice = (value?: number) => {
-        const newValue = Number(value)
-        if (newValue) {
-            setDiscountedPrice(newValue)
-            setDiscount((1 - (newValue / total.current)) * 10)
-        } else {
-            setDiscountedPrice(0)
-            setDiscount(10)
-        }
-
-    }
-
-    // 手动处理折扣，改变优惠金额
-    const handleDiscount = (value?: number) => {
-        const newValue = Number(value)
-        if (newValue) {
-            setDiscount(newValue)
-            setDiscountedPrice(total.current * (10 - newValue) / 10)
-        } else {
-            setDiscount(10)
-            setDiscountedPrice(0)
-        }
-    }
-
-    // 即使获取medicarePayment用于实收金额的计算
-    const handleMedicarePayment = (value?: number) => {
-        const newValue = Number(value)
-        if (newValue) {
-            setMedicarePayment(newValue)
-        } else {
-            setMedicarePayment(0)
-        }
-    }
-
-    const onFinish = () => {
+    const onFinish = (fields: AddRegisteredFieldsType) => {
+        const registrationFeeItem = registrationFeeOptions.find(_ => _.key === fields.registrationFee)
+        const medicalFeeItem = medicalFeeOptions.find(_ => _.key === fields.medicalFee)
+        const fee = medicalFeeItem ? registrationFeeItem!.value + medicalFeeItem.value : registrationFeeItem!.value
+        setAmountReceivable(fee)
         setVisible(true)
-
     }
 
-    const onOk = () => {
+    const onOk = (formValues: RegisteredFeeFieldsType) => {
+        console.log('formValues', formValues)
         setVisible(false)
-        clearModalValues()
     }
 
     const onCancel = () => {
         setVisible(false)
-        clearModalValues()
     }
 
     const RegisteredInfoProps = {
@@ -149,14 +100,9 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
 
     const RegisteredFeeProps = {
         visible,
+        amountReceivable,
         onOk,
         onCancel,
-        handleDiscountedPrice,
-        handleDiscount,
-        handleMedicarePayment,
-        discount,
-        discountedPrice,
-        actualMoney,
     }
 
     return (

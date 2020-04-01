@@ -308,3 +308,34 @@ export const paymentMethods = [
         value: 'vipCard'
     },
 ]
+
+export const registrationFeeOptions = [
+    {
+        key: 10001300,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.free' }),
+        value: 0
+    },
+    {
+        key: 10001301,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.normal' }),
+        value: 10
+    },
+    {
+        key: 10001302,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.expert' }),
+        value: 20
+    },
+]
+
+export const medicalFeeOptions = [
+    {
+        key: 10001400,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.free' }),
+        value: 0
+    },
+    {
+        key: 10001401,
+        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.notFree' }),
+        value: 50
+    },
+]

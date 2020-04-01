@@ -1,8 +1,15 @@
 import React from 'react'
 import { Card, Row, Col, Form, Input, Select } from 'antd'
 import { formatMessage } from 'umi-plugin-react/locale'
-import { departments, outpatientTypes } from '@/utils/dataDictionary'
+
+import { 
+    departments, 
+    outpatientTypes,
+    registrationFeeOptions, 
+    medicalFeeOptions 
+    } from '@/utils/dataDictionary'
 import { RegisteredInfoProps } from '../data'
+
 
 const { Option } = Select
 
@@ -18,36 +25,6 @@ const fieldLabels = {
 
 }
 
-const registrationFeeOptions = [
-    {
-        key: 0,
-        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.free' }),
-        value: 'free'
-    },
-    {
-        key: 1,
-        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.normal' }),
-        value: 'normal'
-    },
-    {
-        key: 2,
-        label: formatMessage({ id: 'registrationandmanagement.addandregistered.registrationFee.expert' }),
-        value: 'expert'
-    },
-]
-
-const medicalFeeOptions = [
-    {
-        key: 0,
-        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.free' }),
-        value: 'free'
-    },
-    {
-        key: 1,
-        label: formatMessage({ id: 'registrationandmanagement.addandregistered.medicalFee.notFree' }),
-        value: 'notFree'
-    },
-]
 
 
 const RegisteredInfo = ({  doctors,loading }: RegisteredInfoProps) => (
@@ -114,7 +91,7 @@ const RegisteredInfo = ({  doctors,loading }: RegisteredInfoProps) => (
                     >
                         <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
                             {registrationFeeOptions.map(item =>
-                                <Option key={item.key} value={item.value}>{item.label}</Option>
+                                <Option key={item.key} value={item.key}>{item.label}</Option>
                             )}
                         </Select>
                     </Form.Item>
@@ -126,7 +103,7 @@ const RegisteredInfo = ({  doctors,loading }: RegisteredInfoProps) => (
                     >
                         <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
                             {medicalFeeOptions.map(item =>
-                                <Option key={item.key} value={item.value}>{item.label}</Option>
+                                <Option key={item.key} value={item.key}>{item.label}</Option>
                             )}
                         </Select>
                     </Form.Item>

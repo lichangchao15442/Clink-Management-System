@@ -76,7 +76,7 @@ const SetVip: React.FC<SetVipProps> = props => {
     }
 
     const handleOk = async () => {
-        const formValues = form.getFieldsValue()
+        const formValues = await form.getFieldsValue()
         await onOk(formValues)
         setDatePickDisable(false)
         form.resetFields()
