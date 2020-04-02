@@ -42,8 +42,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange, filters }) => {
     const initValues = {
         ...filters
     }
-    const initCreateTimes = strDateToMoment(filters.createTime)
-    initValues.createTime = initCreateTimes
+    initValues.createTime = strDateToMoment(filters.createTime)
     initValues.visitStatus = filters.visitStatus ? Number(filters.visitStatus) : visitStatusOptions[0].key
     useEffect(() => {
         setFieldsValue(initValues)
@@ -64,14 +63,19 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange, filters }) => {
         return newFields
     }
 
-    const handleFilterChange = () => {
+    const handleFilterChange = async () => {
         const { getFieldsValue } = form
-        const fields = getFieldsValue()
+        const fields = await getFieldsValue()
         const newFields = handleFields(fields)
         onFilterChange(newFields)
     }
     return (
-        <Form form={form}>
+        <Form
+            form={form}
+            initialValues={{
+                visitStatus: 11111111
+            }}
+        >
             <Row gutter={24}>
                 <Col xs={24} sm={14} md={12} lg={9} {...colProps}>
                     <RangePickerFilter

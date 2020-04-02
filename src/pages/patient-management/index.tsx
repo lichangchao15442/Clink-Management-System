@@ -203,7 +203,7 @@ const PatientManagement: React.FC<PatientManagementProps> = props => {
     return (
         <PageHeaderWrapper>
             <Card
-                className={styles.main}
+                className='card-border-table'
                 extra={
                     <div className='top-right-button'>
                         <Button

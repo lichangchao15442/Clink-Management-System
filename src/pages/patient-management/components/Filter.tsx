@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Row, Col } from 'antd'
 import { formatMessage } from 'umi-plugin-react/locale'
 import moment from 'moment'
@@ -33,13 +33,12 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange, filters }) => {
             label
         }
     })
-    newVipLevels.unshift({ key: 11111111, label: formatMessage({ id: 'commonandfields.all' }), value: 11111111 })
+    newVipLevels.unshift({ key: 11111111, label: formatMessage({ id: 'commonandfields.all' }), value: 11111111, discount: 0 })
 
     // 设置表单的值
     initValues.vipLevel = filters.vipLevel ? Number(filters.vipLevel) : newVipLevels[0].key
-    const initCreateTime = strDateToMoment(filters.createTime)
-    initValues.createTime = initCreateTime
-    setFieldsValue(initValues)
+    initValues.createTime = strDateToMoment(filters.createTime)
+    useEffect(() => { setFieldsValue(initValues) }, [initValues])
 
     const handleFields = (fields: any) => {
         const newFields = { ...fields }
@@ -62,7 +61,12 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange, filters }) => {
     }
 
     return (
-        <Form form={form}>
+        <Form
+            form={form}
+            initialValues={{
+                vipLevel: 11111111
+            }}
+        >
             <Row gutter={24}>
                 <Col xs={24} sm={7} md={8} lg={6} {...colProps}>
                     <SelectFilter

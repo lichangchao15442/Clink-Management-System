@@ -1,7 +1,9 @@
-import { Reducer, AnyAction } from 'redux'
+import { AnyAction } from 'redux'
+import { message } from 'antd'
+import { formatMessage } from 'umi-plugin-react/locale'
 import { EffectsCommandMap, Subscription } from 'dva'
-import { StateType } from './data'
-import { queryDoctors } from './service'
+// import { StateType } from './data'
+import { addRegistered } from './service'
 
 
 type Effects = (
@@ -11,13 +13,13 @@ type Effects = (
 
 interface ModelType {
     namespace: string;
-    state: StateType;
+    state: {};
     effects: {
-        fetchDoctors: Effects,
+        add: Effects,
     };
-    reducers: {
-        saveDoctors: Reducer<StateType>;
-    };
+    // reducers: {
+    //     saveDoctors: Reducer<StateType>;
+    // };
     subscriptions: {
         setup: Subscription
     }
@@ -27,24 +29,13 @@ const Model: ModelType = {
     namespace: 'addRegistered',
 
     state: {
-        doctors: [],
     },
 
     effects: {
-        *fetchDoctors(_, { call, put }) {
-            const response = yield call(queryDoctors)
-            yield put({
-                type: 'saveDoctors',
-                payload: response.data
-            })
-        }
-    },
-
-    reducers: {
-        saveDoctors(state, { payload }): StateType {
-            return {
-                ...state,
-                doctors: payload
+        *add({ payload }, { call }) {
+            const response = yield call(addRegistered, payload)
+            if (response.status === 'ok') {
+                message.success(formatMessage({ id: 'registrationandmanagement.registeredandrecord.chargedSuccessfully' }))
             }
         }
     },
@@ -54,7 +45,7 @@ const Model: ModelType = {
             history.listen(({ pathname }) => {
                 if (pathname === '/registration-management/add-registered') {
                     dispatch({
-                        type: 'fetchDoctors'
+                        type: 'doctors/fetchDoctors'
                     })
                     dispatch({
                         type: 'patients/fetchPatients'

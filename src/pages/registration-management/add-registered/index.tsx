@@ -9,10 +9,11 @@ import { Dispatch } from 'redux'
 
 import { randomNumber } from '@/utils/utils'
 import { ageUnits, registrationFeeOptions, medicalFeeOptions } from '@/utils/dataDictionary'
+import { DoctorsStateType, DoctorsType } from '@/models/doctors'
 import RegisteredInfo from './components/RegisteredInfo'
 import PatientInfo from './components/PatientInfo'
 import RegisteredFee from './components/RegisteredFee'
-import { StateType, AddRegisteredFieldsType, RegisteredFeeFieldsType } from './data'
+import { AddRegisteredFieldsType, RegisteredFeeFieldsType } from './data'
 import { patientManagementState } from '../../patient-management/data'
 
 import styles from './index.less'
@@ -20,8 +21,8 @@ import styles from './index.less'
 
 interface AddRegisteredProps {
     dispatch: Dispatch;
-    addRegistered: StateType;
     patients: patientManagementState;
+    doctors: DoctorsType[];
     loading: {
         effects: {
             [key: string]: boolean
@@ -34,8 +35,7 @@ interface AddRegisteredProps {
 const AddRegistered: React.FC<AddRegisteredProps> = props => {
     const [form] = Form.useForm()
     const { setFieldsValue } = form
-    const { addRegistered, patients, loading } = props
-    const { doctors } = addRegistered
+    const { patients, loading, doctors, dispatch } = props
     const { patients: Patients } = patients
     const [visible, setVisible] = useState(false)
     const [amountReceivable, setAmountReceivable] = useState(0)
@@ -55,7 +55,7 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
         const ageAndAgeUnit = `${item.age}${ageUnit}`
         return {
             ...item,
-            gender,
+            genderText: gender,
             ageAndAgeUnit
         }
     })
@@ -79,8 +79,20 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
         setVisible(true)
     }
 
-    const onOk = (formValues: RegisteredFeeFieldsType) => {
-        console.log('formValues', formValues)
+    const onOk = async (feeValues: RegisteredFeeFieldsType) => {
+        const registeredPatientValues = await form.getFieldsValue()
+        // 数据处理
+        registeredPatientValues.doctorName = doctors.find(_ => _.id === registeredPatientValues.doctorId)!.name
+        registeredPatientValues.patientName = Patients.find(_ => _.id === registeredPatientValues.id)!.name
+        registeredPatientValues.birthday = moment(registeredPatientValues.birthday).format('YYYY-MM-DD')
+        registeredPatientValues.attendanceStatus = 10001500
+        registeredPatientValues.amountReceivable = amountReceivable
+        registeredPatientValues.actualMoney = feeValues.actualMoney
+        await dispatch({
+            type: 'addRegistered/add',
+            payload: registeredPatientValues
+        })
+        form.resetFields()
         setVisible(false)
     }
 
@@ -89,8 +101,7 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
     }
 
     const RegisteredInfoProps = {
-        doctors,
-        loading: loading.effects['addRegistered/fetchCurrentUser']
+        doctors
     }
 
     const PatientInfoProps = {
@@ -100,6 +111,7 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
 
     const RegisteredFeeProps = {
         visible,
+        confirmLoading: loading.effects['addRegistered/add'],
         amountReceivable,
         onOk,
         onCancel,
@@ -136,14 +148,14 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
     )
 }
 
-export default connect(({ addRegistered, patients, loading }:
+export default connect(({ patients, doctors, loading }:
     {
-        addRegistered: StateType,
         patients: patientManagementState,
+        doctors: DoctorsStateType,
         loading: {
             effects: {
                 [key: string]: boolean
             }
         }
-    }) => ({ addRegistered, patients, loading }))
+    }) => ({ patients, doctors: doctors.doctors, loading }))
     (AddRegistered)

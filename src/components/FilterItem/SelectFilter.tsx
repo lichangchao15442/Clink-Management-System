@@ -20,7 +20,6 @@ interface SelectFilterProps {
 const SelectFilter: React.FC<SelectFilterProps> = ({ name, label, options, onChange }) => (
         <FormItem name={name} label={label}>
             <Select
-                defaultValue={options[0].key}
                 style={{ width: 120 }}
                 onChange={onChange} >
                 {options.map(item =>

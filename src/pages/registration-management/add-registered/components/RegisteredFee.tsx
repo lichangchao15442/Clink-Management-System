@@ -11,6 +11,7 @@ const FormItem = Form.Item
 
 interface RegisteredFeeProps {
     visible: boolean;
+    confirmLoading: boolean;
     amountReceivable: number;
     onOk: (formValues: RegisteredFeeFieldsType) => void;
     onCancel: () => void;
@@ -19,6 +20,7 @@ interface RegisteredFeeProps {
 const RegisteredFee: React.FC<RegisteredFeeProps> = props => {
     const {
         visible,
+        confirmLoading,
         amountReceivable,
         onOk,
         onCancel,
@@ -90,6 +92,7 @@ const RegisteredFee: React.FC<RegisteredFeeProps> = props => {
             visible={visible}
             onOk={handleOk}
             onCancel={handleCancel}
+            confirmLoading={confirmLoading}
         >
             <div className={styles.fee}>
                 <span className={styles.amountReceivable}><FormattedMessage id='registrationandmanagement.addandregistered.amountReceivable' /></span>

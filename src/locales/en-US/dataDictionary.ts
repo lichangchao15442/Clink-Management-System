@@ -53,4 +53,7 @@ export default {
     'dataanddictionary.paymentMethod.weChat': 'WeChat',
     'dataanddictionary.paymentMethod.bankCard': 'BankCard',
     'dataanddictionary.paymentMethod.vipCard': 'VipCard',
+    'dataanddictionary.attendanceStatus.pending': 'Pending',
+    'dataanddictionary.attendanceStatus.consulted': 'Consulted',
+    'dataanddictionary.attendanceStatus.bounced': 'Bounced',
 }

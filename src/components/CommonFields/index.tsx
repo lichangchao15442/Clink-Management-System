@@ -292,7 +292,7 @@ export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColPr
                             <div className={styles.info}>
                                 <div>
                                     <span className={styles.name}>{item.name}</span>
-                                    <span>{item.gender}</span>
+                                    <span>{item.genderText}</span>
                                     <span>{item.ageAndAgeUnit}</span>
                                 </div>
                                 <div>{item.mobile}</div>

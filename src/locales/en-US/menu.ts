@@ -6,6 +6,7 @@ export default {
     'menu.workplace': 'Workplace',
     'menu.registration-management': 'Registration Management',
     'menu.registration-management.add-registered': 'Add Registered',
+    'menu.registration-management.registered-record': 'Registered Record',
     'menu.patient-management': 'Patient Management',
     'menu.add-patient': 'Add Patient',
 

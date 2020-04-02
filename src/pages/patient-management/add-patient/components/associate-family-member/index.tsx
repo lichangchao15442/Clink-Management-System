@@ -120,7 +120,7 @@ const AssociateFamilyMember: React.FC<AssociateFamilyMemberProps> = props => {
         const ageAndAgeUnit = `${item.age}${ageUnit}`
         return {
             ...item,
-            gender,
+            genderText:gender,
             ageAndAgeUnit,
         }
     })

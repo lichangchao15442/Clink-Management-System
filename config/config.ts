@@ -1,6 +1,6 @@
 import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'
-import webpackPlugin from './plugin.config'
+// import webpackPlugin from './plugin.config'
 
 
 const plugins: IPlugin[] = [
@@ -93,6 +93,11 @@ const config: IConfig = {
                                     name: 'add-registered',
                                     path: '/registration-management/add-registered',
                                     component: './registration-management/add-registered'
+                                },
+                                {
+                                    name: 'registered-record',
+                                    path: '/registration-management/registered-record',
+                                    component: './registration-management/registered-record'
                                 },
                             ]
                         },

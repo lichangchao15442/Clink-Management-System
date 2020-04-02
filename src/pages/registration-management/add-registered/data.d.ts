@@ -28,10 +28,10 @@ export interface RegisteredInfoProps {
 
 export interface AddRegisteredFieldsType {
     registeredNumber?: string;
-    department?: number;
-    outpatientTypes?: number;
-    admissionDoctor?: number;
-    registrationFee?: number;
+    department: number;
+    outpatientTypes: number;
+    doctorId: number;
+    registrationFee: number;
     medicalFee?: number;
     registeredDate?: string;
     registrar?: string;

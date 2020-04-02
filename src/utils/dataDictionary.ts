@@ -339,3 +339,23 @@ export const medicalFeeOptions = [
         value: 50
     },
 ]
+
+// 与visitStatus类似，但是没有接诊中，但有已退号
+export const AttendanceStatus = [
+    {
+        key: 10001500,
+        label: formatMessage({ id: 'dataanddictionary.attendanceStatus.pending' }),
+        value: 'pending'
+    },
+    {
+        key: 10001501,
+        label: formatMessage({ id: 'dataanddictionary.attendanceStatus.consulted' }),
+        value: 'consulted'
+    },
+    {
+        key: 10001502,
+        label: formatMessage({ id: 'dataanddictionary.attendanceStatus.bounced' }),
+        value: 'bounced'
+    },
+]
+

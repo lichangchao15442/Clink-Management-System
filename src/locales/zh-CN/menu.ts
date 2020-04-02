@@ -6,6 +6,7 @@ export default {
     'menu.workplace': '工作台',
     'menu.registration-management': '挂号管理',
     'menu.registration-management.add-registered': '新增挂号',
+    'menu.registration-management.registered-record': '挂号记录',
     'menu.patient-management': '患者管理',
     'menu.add-patient': '新增患者',
 }

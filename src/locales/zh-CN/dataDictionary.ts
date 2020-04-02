@@ -53,4 +53,7 @@ export default {
     'dataanddictionary.paymentMethod.weChat': '微信',
     'dataanddictionary.paymentMethod.bankCard': '银行卡',
     'dataanddictionary.paymentMethod.vipCard': '会员卡',
+    'dataanddictionary.attendanceStatus.pending': '未就诊',
+    'dataanddictionary.attendanceStatus.consulted': '已就诊',
+    'dataanddictionary.attendanceStatus.bounced': '已退号',
 }
