@@ -88,6 +88,11 @@ const AddRegistered: React.FC<AddRegisteredProps> = props => {
         registeredPatientValues.attendanceStatus = 10001500
         registeredPatientValues.amountReceivable = amountReceivable
         registeredPatientValues.actualMoney = feeValues.actualMoney
+        registeredPatientValues.discountedPrice = feeValues.discountedPrice
+        registeredPatientValues.medicarePayment = feeValues.medicarePayment
+        registeredPatientValues.paymentMethod = feeValues.paymentMethod
+        registeredPatientValues.address = registeredPatientValues.address?.join(' ')
+        registeredPatientValues.chargeDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
         await dispatch({
             type: 'addRegistered/add',
             payload: registeredPatientValues

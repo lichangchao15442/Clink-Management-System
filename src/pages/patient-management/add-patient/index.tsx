@@ -31,6 +31,7 @@ const AddPatient: React.FC<AddPatientProps> = props => {
         newFields.familyMembers = familyMembers.current
         newFields.createTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
         newFields.operator = localStorage.getItem('currentUserName')
+        newFields.address = newFields.address.join(' ')
         dispatch({
             type: 'patientManagement/addPatient',
             payload: newFields
@@ -52,7 +53,7 @@ const AddPatient: React.FC<AddPatientProps> = props => {
                 <Card
                     className={styles.main}
                     title={
-                        <div className={styles.title}><FormattedMessage id='patientandmanagement.addandpatient.title' /></div>
+                        <div className='title-decoration'><FormattedMessage id='patientandmanagement.addandpatient.title' /></div>
                     }
                     extra={
                         <div className='top-right-button'>

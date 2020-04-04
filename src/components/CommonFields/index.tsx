@@ -32,14 +32,17 @@ export const PatientName = () => (
     </Col>
 )
 
-export const PatientCardNumber = () => (
+export const PatientCardNumber = ({ disabled }: { disabled?: boolean }) => (
     <Col {...colProps}>
         <Form.Item
             label={formatMessage({ id: 'commonandfields.patientCardNumber' })}
             name="id"
             rules={[{ required: true, message: formatMessage({ id: 'commonandfields.patientCardNumber.required' }) }]}
         >
-            <Input placeholder={formatMessage({ id: 'commonandfields.patientCardNumber.placeholder' })} />
+            <Input
+                placeholder={formatMessage({ id: 'commonandfields.patientCardNumber.placeholder' })}
+                disabled={disabled || false}
+            />
         </Form.Item>
     </Col>
 )
@@ -53,7 +56,7 @@ export const PatientAge = () => (
                     name="age"
                     rules={[{ required: true, message: formatMessage({ id: 'commonandfields.patientAge.required' }) }]}
                 >
-                    <Input placeholder={formatMessage({ id: 'commonandfields.patientAge.placeholder' })} style={{width:'76%'}} />
+                    <Input placeholder={formatMessage({ id: 'commonandfields.patientAge.placeholder' })} style={{ width: '76%' }} />
                 </Form.Item>
                 <Form.Item noStyle name='ageUnit'>
                     <Select defaultValue={ageUnits[ageUnits.length - 1].key} style={{ width: '24%' }}>
@@ -251,10 +254,11 @@ export const Note = ({ newColProps }: { newColProps?: any }) => (
 interface SearchPatientProps {
     patients: any;
     newColProps: any;
+    disabled?: boolean;
     onChange?: (value: number) => void;
 }
 
-export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColProps, onChange }) => (
+export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColProps, onChange, disabled }) => (
     < Col {...newColProps}>
         <Form.Item
             label={formatMessage({ id: 'commonandfields.patientName' })}
@@ -265,6 +269,7 @@ export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColPr
                 showSearch
                 placeholder={formatMessage({ id: 'commonandfields.searchPatient.placeholder' })}
                 optionFilterProp="children"
+                disabled={disabled || false}
                 onChange={onChange || (() => { })}
                 filterOption={(input, option) => {
                     const parseInput = input.replace(/\s*/g, '')

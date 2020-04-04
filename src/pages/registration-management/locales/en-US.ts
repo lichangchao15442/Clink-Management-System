@@ -26,6 +26,18 @@ export default {
     'registrationandmanagement.registeredandrecord.admissionTime': 'Admission Time',
     'registrationandmanagement.registeredandrecord.searchFilter.patientName.placeholder': 'Enter patient name',
     'registrationandmanagement.registeredandrecord.chargedSuccessfully': 'Charged Successfully!',
+    'registrationandmanagement.editandregister.editRegisteredInformation': 'Edit Registered Information',
+    'registrationandmanagement.editandregister.editRegisteredInformation.success': 'Edit Registered Information Successfully!',
+    'registrationandmanagement.editandregister.orderandinformation': 'Order Information',
+    'registrationandmanagement.editandregister.orderNumber': 'Order Number',
+    'registrationandmanagement.editandregister.discountedPrice': 'Discounted Price(RMB)',
+    'registrationandmanagement.editandregister.medicarePayment': 'Medicare Payment(RMB)',
+    'registrationandmanagement.editandregister.chargeDate': 'Charge Date',
+    'registrationandmanagement.editandregister.tollCollector': 'Toll Collector',
+    'registrationandmanagement.editandregister.registeredInformation': 'Registered Information',
+    'registrationandmanagement.editandregister.resign.completeConfirmation': 'Complete Confirmation',
+    'registrationandmanagement.editandregister.resign.modalContent': 'The number return operation is irreversible. Are you sure you want to return the number?',
+    'registrationandmanagement.editandregister.resign.success': 'Resign Successfully!'
 
 
 }

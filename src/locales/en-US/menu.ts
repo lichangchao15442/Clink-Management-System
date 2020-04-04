@@ -7,6 +7,7 @@ export default {
     'menu.registration-management': 'Registration Management',
     'menu.registration-management.add-registered': 'Add Registered',
     'menu.registration-management.registered-record': 'Registered Record',
+    'menu.registration-management.edit-register': 'Edit Register',
     'menu.patient-management': 'Patient Management',
     'menu.add-patient': 'Add Patient',
 

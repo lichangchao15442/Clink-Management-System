@@ -17,6 +17,7 @@ export interface patientsType {
     vipCardCreateTime?: string;
     vipCardExpireDate?: string;
     vipCardNeverExpire?: boolean;
+    address?: string;
 }
 
 export interface newPatientsType extends patientsType {

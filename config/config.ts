@@ -99,6 +99,12 @@ const config: IConfig = {
                                     path: '/registration-management/registered-record',
                                     component: './registration-management/registered-record'
                                 },
+                                {
+                                    name: 'edit-register',
+                                    path: '/registration-management/edit-register',
+                                    component: './registration-management/edit-register',
+                                    hideInMenu: true,
+                                },
                             ]
                         },
                         {

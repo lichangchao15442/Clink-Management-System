@@ -26,4 +26,16 @@ export default {
     'registrationandmanagement.registeredandrecord.admissionTime': '就诊时间',
     'registrationandmanagement.registeredandrecord.searchFilter.patientName.placeholder': '输入患者姓名',
     'registrationandmanagement.registeredandrecord.chargedSuccessfully': '收费成功！',
+    'registrationandmanagement.editandregister.editRegisteredInformation': '编辑挂号信息',
+    'registrationandmanagement.editandregister.editRegisteredInformation.success': '编辑挂号信息成功',
+    'registrationandmanagement.editandregister.orderandinformation': '订单信息',
+    'registrationandmanagement.editandregister.orderNumber': '订单编号',
+    'registrationandmanagement.editandregister.discountedPrice': '优惠金额（元）',
+    'registrationandmanagement.editandregister.medicarePayment': '医保支付（元）',
+    'registrationandmanagement.editandregister.chargeDate': '收费日期',
+    'registrationandmanagement.editandregister.tollCollector': '收费员',
+    'registrationandmanagement.editandregister.registeredInformation': '挂号信息',
+    'registrationandmanagement.editandregister.resign.completeConfirmation': '完成确认',
+    'registrationandmanagement.editandregister.resign.modalContent': '退号操作不可撤销，确定要退号吗？',
+    'registrationandmanagement.editandregister.resign.success': '退号成功'
 }

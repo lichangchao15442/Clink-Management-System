@@ -7,6 +7,7 @@ export default {
     'menu.registration-management': '挂号管理',
     'menu.registration-management.add-registered': '新增挂号',
     'menu.registration-management.registered-record': '挂号记录',
+    'menu.registration-management.edit-register': '编辑挂号',
     'menu.patient-management': '患者管理',
     'menu.add-patient': '新增患者',
 }

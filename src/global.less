@@ -72,3 +72,21 @@ body {
   }
 
 }
+
+
+.title-decoration::before {
+  display: inline-block;
+  content: '';
+  width: 6px;
+  height: 19px;
+  margin: 0 6px 0 0;
+  background: @primary-color;
+}
+
+.title-decoration {
+  font-weight: 700;
+  span {
+      position: absolute;
+      margin-top: -3px;
+  }
+}

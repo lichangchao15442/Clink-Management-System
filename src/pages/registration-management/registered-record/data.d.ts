@@ -3,6 +3,7 @@
 export interface RegisteredPatientType {
     registeredNumber?: number | string;
     patientName?: string;
+    id?: number;
     gender?: number;
     age?: number;
     ageUnit?: number;
@@ -15,6 +16,19 @@ export interface RegisteredPatientType {
     actualMoney?: number;
     refundAmount?: number;
     attendanceStatus?: number;
+    discountedPrice?: number;
+    medicarePayment?: number;
+    paymentMethod?: number;
+    chargeDate?: string;
+    registrar?: string;
+    outpatientType?: number;
+    registrationFee?: number;
+    medicalFee?: number;
+    birthday?: string;
+    IDNumber?: number;
+    address?: string;
+    addressDetail?: string;
+    note?: string;
 
 }
 
@@ -29,7 +43,7 @@ export interface StateType {
 export interface ColumnsType {
     title?: string;
     dataIndex?: string;
-    render?: (text: string) => ReactNode
+    render?: (text: string, record?: any) => ReactNode
 }
 
 
