@@ -20,6 +20,7 @@ export default {
     'registrationandmanagement.addandregistered.actualMoney': 'Actual Money',
     'registrationandmanagement.addandregistered.actualMoneys': 'Actual Money(RMB)',
     'registrationandmanagement.addandregistered.paymentMethod': 'Payment Method',
+    'registrationandmanagement.addandregistered.refundMethod': 'Refund Method',
     'registrationandmanagement.addandregistered.collectionNote': 'Collection Note',
     'registrationandmanagement.addandregistered.refundAmount': 'Refund Amount(RMB)',
     'registrationandmanagement.registeredandrecord.registeredDepartment': 'Registered Department',
@@ -27,17 +28,22 @@ export default {
     'registrationandmanagement.registeredandrecord.searchFilter.patientName.placeholder': 'Enter patient name',
     'registrationandmanagement.registeredandrecord.chargedSuccessfully': 'Charged Successfully!',
     'registrationandmanagement.editandregister.editRegisteredInformation': 'Edit Registered Information',
+    'registrationandmanagement.editandregister.viewRegisteredInformation': 'View Registered Information',
     'registrationandmanagement.editandregister.editRegisteredInformation.success': 'Edit Registered Information Successfully!',
     'registrationandmanagement.editandregister.orderandinformation': 'Order Information',
     'registrationandmanagement.editandregister.orderNumber': 'Order Number',
     'registrationandmanagement.editandregister.discountedPrice': 'Discounted Price(RMB)',
     'registrationandmanagement.editandregister.medicarePayment': 'Medicare Payment(RMB)',
     'registrationandmanagement.editandregister.chargeDate': 'Charge Date',
+    'registrationandmanagement.editandregister.refundDate': 'Refund Date',
     'registrationandmanagement.editandregister.tollCollector': 'Toll Collector',
     'registrationandmanagement.editandregister.registeredInformation': 'Registered Information',
     'registrationandmanagement.editandregister.resign.completeConfirmation': 'Complete Confirmation',
     'registrationandmanagement.editandregister.resign.modalContent': 'The number return operation is irreversible. Are you sure you want to return the number?',
-    'registrationandmanagement.editandregister.resign.success': 'Resign Successfully!'
+    'registrationandmanagement.editandregister.resign.success': 'Resign Successfully!',
+    'registrationandmanagement.editandregister.registrationFee': 'Registration Fee(RMB)',
+    'registrationandmanagement.editandregister.medicalFee': 'Medical Fee(RMB)',
+    'registrationandmanagement.editandregister.operator': 'Operator',
 
 
 }

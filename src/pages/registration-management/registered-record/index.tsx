@@ -7,6 +7,7 @@ import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale'
 import { connect } from 'dva'
 import { router } from 'umi'
 import { Dispatch } from 'redux'
+import moment from 'moment'
 
 import { AttendanceStatus } from '@/utils/dataDictionary'
 import { DoctorsStateType, DoctorsType } from '@/models/doctors'
@@ -83,7 +84,13 @@ const consultedColumns = [
     {
         title: formatMessage({ id: 'commonandfields.operate' }),
         dataIndex: 'operate',
-        render: () => <span style={{ color: '#666EE8' }}><FormattedMessage id='commonandfields.checkDetail' /></span>
+        render: (text: string, record: RegisteredPatientType) =>
+            (<a
+                style={{ color: '#666EE8' }}
+                onClick={() => { router.push(`/registration-management/edit-register?registeredNumber=${record.registeredNumber}`) }}
+            >
+                <FormattedMessage id='commonandfields.checkDetail' />
+            </a>)
     },
 ]
 
@@ -112,17 +119,21 @@ const RegisteredRecord: React.FC<RegisteredRecordProps> = props => {
     const [visitStatus, setVisitStatus] = useState(AttendanceStatus[0].value)
 
 
-    const resign = (registeredNumber: number) => {
+    const resign = (record: RegisteredPatientType) => {
         const title = formatMessage({ id: 'registrationandmanagement.editandregister.resign.completeConfirmation' })
         const content = <span>
             <ExclamationCircleFilled style={{ color: '#FFD149', fontSize: 16, marginRight: 10 }} />
             {formatMessage({ id: 'registrationandmanagement.editandregister.resign.modalContent' })}
         </span>
         const onOk = async () => {
+            const refundDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+            const { actualMoney } = record
             await dispatch({
                 type: 'editRegister/submit',
                 payload: {
-                    registeredNumber,
+                    registeredNumber: Number(record.registeredNumber),
+                    refundDate,
+                    refundAmount: Number(actualMoney),
                     attendanceStatus: 10001502,
                     operationType: 'resign'
                 }
@@ -138,9 +149,14 @@ const RegisteredRecord: React.FC<RegisteredRecordProps> = props => {
                 ...item,
                 render: (text: string, record: RegisteredPatientType) => (
                     <div style={{ color: '#666EE8' }}>
-                        <a style={{ marginRight: 6 }} onClick={() => { router.push(`/registration-management/edit-register?registeredNumber=${record.registeredNumber}`) }}><FormattedMessage id='commonandfields.edit' /></a>
+                        <a
+                            style={{ marginRight: 6 }}
+                            onClick={() => { router.push(`/registration-management/edit-register?registeredNumber=${record.registeredNumber}`) }}
+                        >
+                            <FormattedMessage id='commonandfields.edit' />
+                        </a>
                         <a style={{ marginRight: 6 }}><FormattedMessage id='commonandfields.admission' /></a>
-                        <a onClick={() => { resign(Number(record.registeredNumber)) }}><FormattedMessage id='commonandfields.resign' /></a>
+                        <a onClick={() => { resign(record) }}><FormattedMessage id='commonandfields.resign' /></a>
                     </div>
                 )
             }

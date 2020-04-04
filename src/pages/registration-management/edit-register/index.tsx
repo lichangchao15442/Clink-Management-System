@@ -14,12 +14,14 @@ import { DoctorsType, DoctorsStateType } from '@/models/doctors'
 import { patientManagementState, patientsType } from '@/pages/patient-management/data'
 import { registrationFeeOptions, medicalFeeOptions } from '@/utils/dataDictionary'
 import ModalConfirm from '@/components/ModalConfirm'
+import RegisteredInformation from './components/registered-information'
 import OrderInformation from './components/OrderInformation'
-import RegisteredInformation from './components/RegisteredInformation'
 import PatientInformation from './components/PatientInformation'
 import { EditRegisterStateType } from './data'
 
 import styles from './index.less'
+
+const { RegisInfoOfPending, RegisInfoOfOthers } = RegisteredInformation
 
 interface EditRegisterProps {
     editRegister: EditRegisterStateType;
@@ -40,6 +42,7 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
     const [form] = Form.useForm()
     const { editRegister, doctors, patients, loading, dispatch, location } = props
     const { registeredInformation } = editRegister
+    const { attendanceStatus } = registeredInformation
     const { query } = location
 
     const registrationFeeOption = registrationFeeOptions.find(_ => _.key === registeredInformation.registrationFee)
@@ -59,15 +62,18 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
         setFieldsValue(initialValue)
     }, [initialValue])
 
+
     const onFinish = (fields: Store) => {
         const newFields = { ...fields }
         newFields.registeredNumber = Number(query.registeredNumber)
-        newFields.doctorName = doctors.find(_ => _.id === newFields.doctorId)?.name
+        if (attendanceStatus === 10001500) {
+            newFields.doctorName = doctors.find(_ => _.id === newFields.doctorId)?.name
+            delete newFields.registrationFee
+            delete newFields.medicalFee
+        }
         newFields.birthday = moment(newFields.birthday).format('YYYY-MM-DD')
         newFields.address = typeof fields.address === 'object' ? fields.address.join(' ') : ''
         newFields.operationType = 'edit'
-        delete newFields.registrationFee
-        delete newFields.medicalFee
         dispatch({
             type: 'editRegister/submit',
             payload: newFields
@@ -82,10 +88,14 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
         </span>
         const onOk = async () => {
             const registeredNumber = Number(query.registeredNumber)
+            const refundDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+            const { actualMoney } = registeredInformation
             await dispatch({
                 type: 'editRegister/submit',
                 payload: {
                     registeredNumber,
+                    refundDate,
+                    refundAmount: Number(actualMoney),
                     attendanceStatus: 10001502,
                     operationType: 'resign'
                 }
@@ -97,11 +107,17 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
 
     const OrderInformationProps = {
         data: registeredInformation,
-        loading: loading.effects['editRegister/fetch']
+        loading: loading.effects['editRegister/fetch'],
+        attendanceStatus
     }
 
-    const RegisteredInformationProps = {
+    const RegisInfoOfPendingProps = {
         doctors
+    }
+
+    const RegisInfoOfOthersProps = {
+        data: registeredInformation,
+        loading: loading.effects['editRegister/fetch']
     }
 
     const PatientInformationProps = {
@@ -117,7 +133,12 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
                 <Card
                     className={styles.main}
                     title={
-                        <div className='title-decoration'><FormattedMessage id='registrationandmanagement.editandregister.editRegisteredInformation' /></div>
+                        <div className='title-decoration'>
+                            {attendanceStatus === 10001500 ?
+                                <FormattedMessage id='registrationandmanagement.editandregister.editRegisteredInformation' /> :
+                                <FormattedMessage id='registrationandmanagement.editandregister.viewRegisteredInformation' />
+                            }
+                        </div>
                     }
                     extra={
                         <div className='top-right-button'>
@@ -130,15 +151,17 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
                             >
                                 <FormattedMessage id='commonandfields.save' />
                             </Button>
-                            <Button
-                                style={{ marginRight: 10 }}
-                                type='primary'
-                                ghost
-                                icon={<WalletFilled />}
-                                onClick={resign}
-                            >
-                                <FormattedMessage id='commonandfields.resign' />
-                            </Button>
+                            {attendanceStatus === 10001500 &&
+                                <Button
+                                    style={{ marginRight: 10 }}
+                                    type='primary'
+                                    ghost
+                                    icon={<WalletFilled />}
+                                    onClick={resign}
+                                >
+                                    <FormattedMessage id='commonandfields.resign' />
+                                </Button>
+                            }
                             <Button
                                 type='primary'
                                 ghost
@@ -151,7 +174,10 @@ const EditRegister: React.FC<EditRegisterProps> = props => {
                     }
                 >
                     <OrderInformation {...OrderInformationProps} />
-                    <RegisteredInformation {...RegisteredInformationProps} />
+                    {attendanceStatus === 10001500 ?
+                        <RegisInfoOfPending {...RegisInfoOfPendingProps} /> :
+                        <RegisInfoOfOthers {...RegisInfoOfOthersProps} />
+                    }
                     <PatientInformation {...PatientInformationProps} />
                 </Card>
             </PageHeaderWrapper>

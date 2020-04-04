@@ -31,6 +31,7 @@ const registeredPatients = Mock.mock({
             admissionTime: '@datetime()',
             birthday: '@datetime()',
             chargeDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
+            refundDate: '@datetime("yyyy-MM-dd HH:mm:ss")',
             'amountReceivable|60-100': 1,
             'actualMoney|20-60': 1,
             'refundAmount|20-60': 1,

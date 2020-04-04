@@ -20,6 +20,7 @@ export interface RegisteredPatientType {
     medicarePayment?: number;
     paymentMethod?: number;
     chargeDate?: string;
+    refundDate?: string;
     registrar?: string;
     outpatientType?: number;
     registrationFee?: number;

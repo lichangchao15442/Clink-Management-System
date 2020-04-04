@@ -7,6 +7,7 @@ import { RegisteredPatientType } from '../../registered-record/data'
 interface OrderInformationProps {
     data: RegisteredPatientType;
     loading: boolean;
+    attendanceStatus?: number;
 }
 
 const columns = [
@@ -27,7 +28,7 @@ const columns = [
         dataIndex: 'four',
     },
 ];
-const OrderInformation: React.FC<OrderInformationProps> = ({ data, loading }) => {
+const OrderInformation: React.FC<OrderInformationProps> = ({ data, loading, attendanceStatus }) => {
     const paymentMethod = paymentMethods.find(_ => _.key === data.paymentMethod)?.label
     // 处理数据：处理成Table格式的数据
     const dataSource = [
@@ -46,6 +47,15 @@ const OrderInformation: React.FC<OrderInformationProps> = ({ data, loading }) =>
             four: `${formatMessage({ id: 'registrationandmanagement.editandregister.tollCollector' })}:${data?.registrar}`,
         },
     ]
+    if (attendanceStatus === 10001502) {
+        dataSource.push({
+            id: 3,
+            one: `${formatMessage({ id: 'registrationandmanagement.addandregistered.refundAmount' })}:${data?.refundAmount?.toFixed(2)}`,
+            two: `${formatMessage({ id: 'registrationandmanagement.addandregistered.refundMethod' })}:${paymentMethod}`,
+            three: `${formatMessage({ id: 'registrationandmanagement.editandregister.refundDate' })}:${data?.refundDate}`,
+            four: `${formatMessage({ id: 'registrationandmanagement.editandregister.operator' })}:${data?.registrar}`,
+        })
+    }
     return (
         <Card
             className='card-title'
