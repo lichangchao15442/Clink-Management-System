@@ -359,3 +359,258 @@ export const AttendanceStatus = [
     },
 ]
 
+export const diagnosticResults = [
+    {
+        key: 10001600,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.epidemicHemorrhagicFever' }),
+        value: 'epidemicHemorrhagicFever'
+    },
+    {
+        key: 10001601,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.acuteBronchitis' }),
+        value: 'acuteBronchitis'
+    },
+    {
+        key: 10001602,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.upperRespiratoryTractInfection' }),
+        value: 'upperRespiratoryTractInfection'
+    },
+    {
+        key: 10001603,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.pharyngitis' }),
+        value: 'pharyngitis'
+    },
+    {
+        key: 10001604,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.acuteGastroenteritis' }),
+        value: 'acuteGastroenteritis'
+    },
+    {
+        key: 10001605,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.irregularMenstruation' }),
+        value: 'irregularMenstruation'
+    },
+    {
+        key: 10001606,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.acuteTonsillitis' }),
+        value: 'acuteTonsillitis'
+    },
+    {
+        key: 10001607,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.JapaneseEncephalitis' }),
+        value: 'JapaneseEncephalitis'
+    },
+    {
+        key: 10001608,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.diphtheria' }),
+        value: 'diphtheria'
+    },
+    {
+        key: 10001609,
+        label: formatMessage({ id: 'dataanddictionary.diagnosticResults.meningitis' }),
+        value: 'meningitis'
+    },
+]
+
+export const medicalAdvices = [
+    {
+        key: 10001700,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.Low_saltLow_pondDiet' }),
+        value: 'Low_saltLow_pondDiet'
+    },
+    {
+        key: 10001701,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.avoidColdAndOtherFoods' }),
+        value: 'avoidColdAndOtherFoods'
+    },
+    {
+        key: 10001702,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.avoidColdHair' }),
+        value: 'avoidColdHair'
+    },
+    {
+        key: 10001703,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.lessSugar' }),
+        value: 'lessSugar'
+    },
+    {
+        key: 10001704,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.avoidStayingUpLateAndAvoidDrinking' }),
+        value: 'avoidStayingUpLateAndAvoidDrinking'
+    },
+    {
+        key: 10001705,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.drinkMoreWater' }),
+        value: 'drinkMoreWater'
+    },
+    {
+        key: 10001706,
+        label: formatMessage({ id: 'dataanddictionary.medicalAdvices.avoidSpicy' }),
+        value: 'avoidSpicy'
+    },
+]
+
+
+export const prescriptionTypes = [
+    {
+        key: 10001800,
+        label: formatMessage({ id: 'dataanddictionary.prescriptionTypes.WesternOrMedicinePrescription' }),
+        value: 'WesternOrMedicinePrescription'
+    },
+    {
+        key: 10001801,
+        label: formatMessage({ id: 'dataanddictionary.prescriptionTypes.ChineseMedicinePrescription' }),
+        value: 'ChineseMedicinePrescription'
+    },
+    {
+        key: 10001802,
+        label: formatMessage({ id: 'dataanddictionary.prescriptionTypes.CheckItem' }),
+        value: 'CheckItem'
+    }
+]
+
+export const usages = [
+    {
+        key: 10001900,
+        label: formatMessage({ id: 'dataanddictionary.usages.oral' }),
+        value: 'oral'
+    },
+    {
+        key: 10001901,
+        label: formatMessage({ id: 'dataanddictionary.usages.intravenousInjection' }),
+        value: 'intravenousInjection'
+    },
+    {
+        key: 10001902,
+        label: formatMessage({ id: 'dataanddictionary.usages.injectingDrugs' }),
+        value: 'injectingDrugs'
+    },
+    {
+        key: 10001903,
+        label: formatMessage({ id: 'dataanddictionary.usages.check' }),
+        value: 'check'
+    },
+    {
+        key: 10001904,
+        label: formatMessage({ id: 'dataanddictionary.usages.skinTest' }),
+        value: 'skinTest'
+    },
+    {
+        key: 10001905,
+        label: formatMessage({ id: 'dataanddictionary.usages.externalUse' }),
+        value: 'externalUse'
+    },
+    {
+        key: 10001906,
+        label: formatMessage({ id: 'dataanddictionary.usages.atomization' }),
+        value: 'atomization'
+    },
+]
+
+
+export const frequencies = [
+    {
+        key: 10002000,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.onceADay' }),
+        value: 'onceADay'
+    },
+    {
+        key: 10002001,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.twoTimesADay' }),
+        value: 'twoTimesADay'
+    },
+    {
+        key: 10002002,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.threeTimesADay' }),
+        value: 'threeTimesADay'
+    },
+    {
+        key: 10002003,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.fourTimesADay' }),
+        value: 'fourTimesADay'
+    },
+    {
+        key: 10002004,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.onceEveryTwoHours' }),
+        value: 'onceEveryTwoHours'
+    },
+    {
+        key: 10002005,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.onceEveryFourHours' }),
+        value: 'onceEveryFourHours'
+    },
+    {
+        key: 10002006,
+        label: formatMessage({ id: 'dataanddictionary.frequencies.onceEverySixHours' }),
+        value: 'onceEverySixHours'
+    },
+]
+
+export const westernMedicineTypes = [
+    {
+        key: 10002100,
+        label: formatMessage({ id: 'dataanddictionary.westernMedicineTypes.commonlyUsedDrugs' }),
+        value: 'commonlyUsedDrugs'
+    },
+    {
+        key: 10002101,
+        label: formatMessage({ id: 'dataanddictionary.westernMedicineTypes.westernMedicine' }),
+        value: 'westernMedicine'
+    },
+    {
+        key: 10002102,
+        label: formatMessage({ id: 'dataanddictionary.westernMedicineTypes.coldMedicine' }),
+        value: 'coldMedicine'
+    },
+    {
+        key: 10002103,
+        label: formatMessage({ id: 'dataanddictionary.westernMedicineTypes.material' }),
+        value: 'material'
+    },
+]
+
+export const chineseMedicineTypes = [
+    {
+        key: 10002200,
+        label: formatMessage({ id: 'dataanddictionary.chineseMedicineTypes.chineseHerbalMedicine' }),
+        value: 'chineseHerbalMedicine'
+    },
+    {
+        key: 10002201,
+        label: formatMessage({ id: 'dataanddictionary.chineseMedicineTypes.heatClearing' }),
+        value: 'heatClearing'
+    },
+    {
+        key: 10002202,
+        label: formatMessage({ id: 'dataanddictionary.chineseMedicineTypes.detoxification' }),
+        value: 'detoxification'
+    },
+    {
+        key: 10002203,
+        label: formatMessage({ id: 'dataanddictionary.chineseMedicineTypes.nonFriedGranules' }),
+        value: 'nonFriedGranules'
+    },
+]
+
+export const checkItemTypes = [
+    {
+        key: 10002300,
+        label: formatMessage({ id: 'dataanddictionary.checkItemTypes.treatmentCosts' }),
+        value: 'treatmentCosts'
+    },
+    {
+        key: 10002301,
+        label: formatMessage({ id: 'dataanddictionary.checkItemTypes.inspectionFee' }),
+        value: 'inspectionFee'
+    },
+    {
+        key: 10002302,
+        label: formatMessage({ id: 'dataanddictionary.checkItemTypes.materialFee' }),
+        value: 'materialFee'
+    },
+    {
+        key: 10002303,
+        label: formatMessage({ id: 'dataanddictionary.checkItemTypes.others' }),
+        value: 'others'
+    },
+]

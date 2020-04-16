@@ -1,0 +1,41 @@
+@import '~antd/es/style/themes/default.less';
+
+.card {
+    margin-bottom: 10px;
+    :global{
+        .ant-card {
+            box-shadow: @card-shadow;
+            border-radius: 16px;
+        }
+        .ant-card-head {
+            border-bottom:none;
+        }
+    }
+
+    
+    .button {
+        :global {
+            .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+                color: #fff;
+                background: @primary-color;
+            }
+            .ant-radio-button-wrapper{
+                color: rgb(204, 204, 204);
+            }
+            label {
+                font-weight:700;
+                min-width: 103px;
+                height: 36px;
+                line-height: 36px;
+                text-align: center;
+                border: 2px solid rgb(204, 204, 204);
+                &:first-child {
+                    border-radius: 4px 0px 0px 4px;
+                }
+                &:last-child {
+                    border-radius: 0px 4px 4px 0px;
+                }
+            }
+        }
+    }
+}

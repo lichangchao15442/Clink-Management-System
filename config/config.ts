@@ -85,6 +85,12 @@ const config: IConfig = {
                             component: './workplace'
                         },
                         {
+                            name: 'newly-opened',
+                            icon: 'folder-add',
+                            path: '/newly-opened',
+                            component: './newly-opened'
+                        },
+                        {
                             name: 'registration-management',
                             icon: 'form',
                             path: '/registration-management',

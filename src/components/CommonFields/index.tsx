@@ -7,7 +7,8 @@ import {
     vipLevels,
     maritalStatus,
     educations,
-    occupations
+    occupations,
+    outpatientTypes
 } from '@/utils/dataDictionary'
 import areaTree from '@/utils/city'
 import styles from './index.less'
@@ -253,13 +254,13 @@ export const Note = ({ newColProps }: { newColProps?: any }) => (
 
 interface SearchPatientProps {
     patients: any;
-    newColProps: any;
+    newColProps?: any;
     disabled?: boolean;
     onChange?: (value: number) => void;
 }
 
 export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColProps, onChange, disabled }) => (
-    < Col {...newColProps}>
+    < Col {...colProps} {...newColProps}>
         <Form.Item
             label={formatMessage({ id: 'commonandfields.patientName' })}
             name="patientName"
@@ -308,3 +309,42 @@ export const SearchPatient: React.FC<SearchPatientProps> = ({ patients, newColPr
         </Form.Item>
     </Col >
 )
+
+export const OutpatientType = () => (
+    <Col {...colProps}>
+        <Form.Item
+            label={formatMessage({ id: 'commonandfields.outpatientType' })}
+            name="outpatientType"
+            rules={[{ required: true, message: formatMessage({ id: 'commonandfields.pleaseSelect' }) }]}
+        >
+            <Select placeholder={formatMessage({ id: 'commonandfields.pleaseSelect' })}>
+                {outpatientTypes.map(item => <Option key={item.key} value={item.key}>{item.label}</Option>)}
+            </Select>
+        </Form.Item>
+    </Col>
+)
+
+
+
+export default {
+    PatientName,
+    PatientCardNumber,
+    PatientAge,
+    Birthday,
+    Gender,
+    Mobile,
+    IDNumber,
+    PatientSource,
+    VipLevel,
+    ExpireDate,
+    Nation,
+    MaritalStatus,
+    Education,
+    Address,
+    AddressDetail,
+    Occupation,
+    Employer,
+    Note,
+    SearchPatient,
+    OutpatientType
+}

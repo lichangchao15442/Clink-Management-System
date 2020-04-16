@@ -1,0 +1,25 @@
+@import '~antd/es/style/themes/default.less';
+
+.card {
+    :global{
+        .ant-card-head {
+            border-bottom:none;
+            .ant-card-head-title {
+                padding-top: 30px;
+            }
+        }
+        .ant-card-body {
+            padding-top: 2px;
+        }
+        .ant-radio-button-wrapper {
+            color: @primary-color;
+            border-color: @primary-color;
+        }
+        .ant-radio-button-wrapper:not(:first-child)::before {
+            background: @primary-color;
+        }
+        .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+            border: 2px solid #ccc;
+        }
+    }
+}
