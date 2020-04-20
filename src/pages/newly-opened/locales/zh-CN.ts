@@ -28,5 +28,7 @@ export default {
     'newlyandopened.drugs.allType': '全部分类',
     'newlyandopened.drugs.enterDrugName': '输入药品名',
     'newlyandopened.drugs.enterCheckName': '输入项目名',
+    'newlyandopened.drugs.addDrugs': '添加药品',
+    'newlyandopened.drugs.pleaseSelectDrug': '请选择药品',
 
 }

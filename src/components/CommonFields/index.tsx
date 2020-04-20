@@ -60,7 +60,7 @@ export const PatientAge = () => (
                     <Input placeholder={formatMessage({ id: 'commonandfields.patientAge.placeholder' })} style={{ width: '76%' }} />
                 </Form.Item>
                 <Form.Item noStyle name='ageUnit'>
-                    <Select defaultValue={ageUnits[ageUnits.length - 1].key} style={{ width: '24%' }}>
+                    <Select style={{ width: '24%' }}>
                         {ageUnits.map(item => <Option key={item.key} value={item.key}>{item.label}</Option>)}
                     </Select>
                 </Form.Item>

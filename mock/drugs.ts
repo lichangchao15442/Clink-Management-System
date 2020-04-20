@@ -90,10 +90,10 @@ const getSpecification = (prescriptionType: number | string) => {
     let specification
     switch (prescriptionType) {
         case 10001800:
-            specification = getValue(['12g', '13g', '14g', '15g', '16g'])
+            specification = getValue(['1g*1', '2g*1', '3g*1', '4g*1', '5g*1'])
             break;
         case 10001801:
-            specification = getValue(['12g', '13g', '14g', '15g', '16'])
+            specification = getValue(['12g', '13g', '14g', '15g', '16g'])
             break;
 
         default:
@@ -126,6 +126,22 @@ const getUnit = (prescriptionType: number | string) => {
     return unit
 }
 
+const getFrequency = (prescriptionType: number | string) => {
+    let frequency
+    if (prescriptionType === 10001800) {
+        frequency = getValue([10002000,10002001,10002002,10002003,10002004,10002005,10002006])
+    }
+    return frequency
+}
+
+const getDays = (prescriptionType: number | string) => {
+    let days
+    if (prescriptionType === 10001800) {
+        days = getValue([1,2,3,4,5,6,7])
+    }
+    return days
+}
+
 
 const drugs = Mock.mock({
     'data|40-60': [
@@ -151,7 +167,17 @@ const drugs = Mock.mock({
             unit() {
                 const { prescriptionType } = this
                 return getUnit(prescriptionType)
-            }
+            },
+            'singleUsage|1-7': 1,
+            'usage|10001900-10001906': 1,
+            frequency() {
+                const { prescriptionType } = this
+                return getFrequency(prescriptionType)
+            },
+            days() {
+                const { prescriptionType } = this
+                return getDays(prescriptionType)
+            },
         }
     ]
 })

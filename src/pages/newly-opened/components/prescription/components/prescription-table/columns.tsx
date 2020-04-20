@@ -7,7 +7,7 @@ import { usages, frequencies } from '@/utils/dataDictionary'
 const westernMedicineColumns = [
     {
         title: formatMessage({ id: 'commonandfields.serialNumber' }),
-        dataIndex: 'serialNumber',
+        dataIndex: 'key',
         width: 80,
         fixed: 'left',
     },
@@ -20,7 +20,7 @@ const westernMedicineColumns = [
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.name' }),
-        dataIndex: 'name',
+        dataIndex: 'drugName',
         width: 100,
         fixed: 'left',
     },
@@ -57,7 +57,7 @@ const westernMedicineColumns = [
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.unitPrice' }),
-        dataIndex: 'unitPrice',
+        dataIndex: 'price',
         editable: true,
         render: (text: number) => text && <span>{text.toFixed(2)}</span>
     },
@@ -66,20 +66,21 @@ const westernMedicineColumns = [
 const chineseMedicineColumns = [
     {
         title: formatMessage({ id: 'commonandfields.serialNumber' }),
-        dataIndex: 'serialNumber',
+        dataIndex: 'key',
         width: 80,
         fixed: 'left',
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.name' }),
-        dataIndex: 'name',
+        dataIndex: 'drugName',
         width: 100,
         fixed: 'left',
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.singleDose' }),
-        dataIndex: 'singleDose',
+        dataIndex: 'singleUsage',
         width: 100,
+        render: (text: number) => <span>{text}g</span>
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.usage' }),
@@ -89,7 +90,7 @@ const chineseMedicineColumns = [
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.unitPrice' }),
-        dataIndex: 'unitPrice',
+        dataIndex: 'price',
         editable: true,
         render: (text: number) => text && <span>{text.toFixed(2)}</span>
     },
@@ -105,13 +106,13 @@ const chineseMedicineColumns = [
 const checkColumns = [
     {
         title: formatMessage({ id: 'commonandfields.serialNumber' }),
-        dataIndex: 'serialNumber',
+        dataIndex: 'key',
         width: 80,
         fixed: 'left',
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.name' }),
-        dataIndex: 'name',
+        dataIndex: 'drugName',
         width: 100,
         fixed: 'left',
     },
@@ -124,6 +125,7 @@ const checkColumns = [
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.quantity' }),
         dataIndex: 'quantity',
         width: 100,
+        render: (text: number, record: O) => <span>{text}{record.unit}</span>
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.usage' }),
@@ -133,7 +135,7 @@ const checkColumns = [
     },
     {
         title: formatMessage({ id: 'newlyandopened.prescriptionandtable.unitPrice' }),
-        dataIndex: 'unitPrice',
+        dataIndex: 'price',
         editable: true,
         render: (text: number) => text && <span>{text.toFixed(2)}</span>
     },

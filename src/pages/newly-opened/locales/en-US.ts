@@ -28,5 +28,8 @@ export default {
     'newlyandopened.drugs.allType': 'All Type',
     'newlyandopened.drugs.enterDrugName': 'Enter Drug Name',
     'newlyandopened.drugs.enterCheckName': 'Enter Check Name',
+    'newlyandopened.drugs.addDrugs': 'Add Drugs',
+    'newlyandopened.drugs.pleaseSelectDrug': 'Please Select Drug',
+
 
 }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, ReactText } from 'react'
 import { Card, Select, Radio, Row, Col } from 'antd'
 import { formatMessage } from 'umi-plugin-react/locale'
 import { CloseOutlined } from '@ant-design/icons'
 import { RadioChangeEvent } from 'antd/es/radio'
 import { Dispatch } from 'redux'
+import _ from 'loadsh'
 
 import { prescriptionTypes } from '@/utils/dataDictionary'
 import PrescriptionTable from './components/prescription-table'
@@ -14,27 +15,34 @@ import styles from './index.less'
 const { Option } = Select
 
 const firstBtnId = Number(`${prescriptionTypes[0].key}1`)
+const initPrescripiton = {
+    id: firstBtnId,
+    type: prescriptionTypes[0].key,
+    name: `${prescriptionTypes[0].label}1`,
+    data: []
+}
 
 interface PrescriptionProps {
     drugs: A<O>;
     dispatch: Dispatch
 }
 
+interface prescriptionType {
+    id: number;
+    type: number;
+    name: string;
+    data: A<O>;
+}
+
 const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
     // 所有处方的数据
-    const [prescriptionArray, setPrescriptionArray] = useState([{
-        id: firstBtnId,
-        type: prescriptionTypes[0].key,
-        name: `${prescriptionTypes[0].label}1`,
-        data: []
-    }])
-    // 当前选中处方的数据
-    const [currentPrescription, setCurrentPrescription] = useState<CurrentPrescriptionType>({
-        id: firstBtnId,
-        type: prescriptionTypes[0].key,
-        name: `${prescriptionTypes[0].label}1`,
-        data: []
-    })
+    const [prescriptionArray, setPrescriptionArray] = useState<Array<prescriptionType>>([initPrescripiton])
+
+    // 当前选中处方的ID
+    const [currentPrescriptionId, setCurrentPrescriptionId] = useState(firstBtnId)
+
+    // 当前选中的处方数据（由prescriptionArray和currentPrescriptionId决定，所以会事实更新）
+    const currentPrescription = prescriptionArray.find(prescription => prescription.id === currentPrescriptionId) || initPrescripiton
 
     const fetchDrugs = (filters: O) => {
         dispatch({
@@ -49,7 +57,7 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
      * 2. 改变药品和药品分类
      */
     const handleBtnCommon = (current: CurrentPrescriptionType) => {
-        setCurrentPrescription(current)
+        setCurrentPrescriptionId(current.id)
         fetchDrugs({ prescriptionType: current.type })
     }
 
@@ -61,7 +69,7 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
      *  data：该处方按钮下的table的数据，数据主要是由药品模块添加的
      */
     const addPrescriptionBtn = (value: number) => {
-        const name = prescriptionTypes.find(_ => _.key === value)?.label
+        const name = prescriptionTypes.find(item => item.key === value)?.label
 
         const obj = {
             id: Number(`${value}${prescriptionArray.length + 1}`),
@@ -70,7 +78,7 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
             data: []
         }
 
-        const arr = [...prescriptionArray]
+        const arr = _.cloneDeep(prescriptionArray)
         arr.push(obj)
         setPrescriptionArray(arr)
         handleBtnCommon(obj)
@@ -82,7 +90,7 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
      * 这样在删除处方按钮的时候可以同时删除按钮以及按钮中table的数据
      */
     const removePrescriptionBtn = (e: any, index: number) => {
-        const arr = [...prescriptionArray]
+        const arr = _.cloneDeep(prescriptionArray)
         arr.splice(index, 1)
         setPrescriptionArray(arr)
         if (arr.length) {
@@ -91,11 +99,11 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
     }
 
     /** 改变处方按钮具体需要做的事：
-     * 1. 使用useState改变当前处方数据(注意：不再单独存放prescriptionType的state，而是存放处方对象)
+     * 1. 使用useState改变当前处方ID
      */
     const handleChangePreBtn = (e: RadioChangeEvent) => {
         const { value } = e.target
-        const current = prescriptionArray.find(_ => _.id === value)
+        const current = prescriptionArray.find(item => item.id === value)
         if (current) {
             handleBtnCommon(current)
         }
@@ -103,7 +111,6 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
 
     // 根据条件过滤药品
     const handleFilterDrugs = (allValues: O) => {
-        console.log('handleFilterDrugs', allValues)
         let obj: O = {}
         obj.prescriptionType = currentPrescription.type
         Object.keys(allValues).map(key => {
@@ -118,6 +125,57 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
         fetchDrugs(obj)
     }
 
+    // 添加药品
+    const handleAddDrugs = (drugIdArray: ReactText[]) => {
+        // 1. 根据ID查找药品，组成添加的药品数组数据
+        let addedDrugs: A<O> = []
+        drugIdArray.map(id => {
+            const drug = drugs.find(item => item.id === id)
+            drug && addedDrugs.push(drug)
+            return id
+        })
+
+        // 2. 为不同类型的处方赋初始值
+        switch (currentPrescription.type) {
+            case prescriptionTypes[0].key:
+                addedDrugs.forEach(item => {
+                    item.total = 1
+                    item.groupNumber = 1
+                })
+                break;
+            case prescriptionTypes[1].key:
+                addedDrugs.forEach(item => {
+                    item.amount = item.price
+                })
+                break;
+            case prescriptionTypes[2].key:
+                addedDrugs.forEach(item => {
+                    item.quantity = 1
+                    item.amount = item.price
+                })
+                break;
+
+            default:
+                break;
+        }
+
+        // 3. 将药品添加到特定的处方中
+        // ！： 深拷贝一份prescriptionArray,因为prescriptionArray中包含引用类型的值，浅拷贝可能会导致数据不渲染
+        const cloneDeepPrescriptionArray = _.cloneDeep(prescriptionArray)
+        cloneDeepPrescriptionArray.forEach((prescription: prescriptionType) => {
+            // 找到当前处方
+            if (prescription.id === currentPrescriptionId) {
+                // 将药品push到data中
+                console.log('addedDrugs', ...addedDrugs)
+                prescription.data.push(...addedDrugs)
+            }
+            // 设置序号值
+            prescription.data.forEach((item, index) => { item.key = index + 1 })
+        })
+        // 更新prescriptionArray
+        setPrescriptionArray(cloneDeepPrescriptionArray)
+    }
+
     const PrescriptionTableProps = {
         currentPrescription
     }
@@ -125,7 +183,8 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
     const DrugsProps = {
         dataSource: drugs,
         currentPrescription,
-        handleFilterDrugs
+        handleFilterDrugs,
+        handleAddDrugs
     }
     return (
         <Card
@@ -141,7 +200,7 @@ const Prescription: React.FC<PrescriptionProps> = ({ drugs, dispatch }) => {
                             <Option key={item.key} value={item.key}>{item.label}</Option>
                         )}
                     </Select>
-                    <Radio.Group buttonStyle="solid" onChange={handleChangePreBtn}>
+                    <Radio.Group buttonStyle="solid" onChange={handleChangePreBtn} value={currentPrescriptionId}>
                         {prescriptionArray.map((item, index) => (
                             <Radio.Button
                                 key={item.id}

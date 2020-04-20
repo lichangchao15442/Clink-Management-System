@@ -20,147 +20,148 @@ import styles from './index.less'
 
 
 interface AddRegisteredProps {
-    dispatch: Dispatch;
-    patients: patientManagementState;
-    doctors: DoctorsType[];
-    loading: {
-        effects: {
-            [key: string]: boolean
-        }
+  dispatch: Dispatch;
+  patients: patientManagementState;
+  doctors: DoctorsType[];
+  loading: {
+    effects: {
+      [key: string]: boolean
     }
+  }
 }
 
 
 
 const AddRegistered: React.FC<AddRegisteredProps> = props => {
-    const [form] = Form.useForm()
-    const { setFieldsValue } = form
-    const { patients, loading, doctors, dispatch } = props
-    const { patients: Patients } = patients
-    const [visible, setVisible] = useState(false)
-    const [amountReceivable, setAmountReceivable] = useState(0)
+  const [form] = Form.useForm()
+  const { setFieldsValue } = form
+  const { patients, loading, doctors, dispatch } = props
+  const { patients: Patients } = patients
+  const [visible, setVisible] = useState(false)
+  const [amountReceivable, setAmountReceivable] = useState(0)
 
-    const initialValues = {
-        registeredNumber: randomNumber(),
-        registeredDate: moment().format('YYYY-MM-DD'),
-        registrar: localStorage.getItem('currentUserName')
+  const initialValues = {
+    registeredNumber: randomNumber(),
+    registeredDate: moment().format('YYYY-MM-DD'),
+    registrar: localStorage.getItem('currentUserName'),
+    ageUnit: ageUnits[ageUnits.length - 1].key
+  }
+
+
+  // 处理patients数据
+  const newPatients = Patients && Patients.map(item => {
+    const gender = item.gender === 0 ? formatMessage({ id: 'dataanddictionary.gender.male' }) : formatMessage({ id: 'dataanddictionary.gender.female' })
+    const ageUnitItem = ageUnits.find(_ => _.key === item.ageUnit)
+    const ageUnit = ageUnitItem && ageUnitItem.label
+    const ageAndAgeUnit = `${item.age}${ageUnit}`
+    return {
+      ...item,
+      genderText: gender,
+      ageAndAgeUnit
     }
+  })
 
+  // 选择患者，自动绑定信息
+  const handleSelectPatient = (value: number) => {
+    const patient = newPatients.find(_ => _.id === value)
+    if (patient) {
+      const ageUnitItem = ageUnits.find(_ => _.key === patient.ageUnit)
+      patient.ageUnit = ageUnitItem && ageUnitItem.key
+      patient.birthday = moment(patient.birthday)
+      setFieldsValue(patient)
+    }
+  }
 
-    // 处理patients数据
-    const newPatients = Patients && Patients.map(item => {
-        const gender = item.gender === 0 ? formatMessage({ id: 'dataanddictionary.gender.male' }) : formatMessage({ id: 'dataanddictionary.gender.female' })
-        const ageUnitItem = ageUnits.find(_ => _.key === item.ageUnit)
-        const ageUnit = ageUnitItem && ageUnitItem.label
-        const ageAndAgeUnit = `${item.age}${ageUnit}`
-        return {
-            ...item,
-            genderText: gender,
-            ageAndAgeUnit
-        }
+  const onFinish = (fields: AddRegisteredFieldsType) => {
+    const registrationFeeItem = registrationFeeOptions.find(_ => _.key === fields.registrationFee)
+    const medicalFeeItem = medicalFeeOptions.find(_ => _.key === fields.medicalFee)
+    const fee = medicalFeeItem ? registrationFeeItem!.value + medicalFeeItem.value : registrationFeeItem!.value
+    setAmountReceivable(fee)
+    setVisible(true)
+  }
+
+  const onOk = async (feeValues: RegisteredFeeFieldsType) => {
+    const registeredPatientValues = await form.getFieldsValue()
+    // 数据处理
+    registeredPatientValues.doctorName = doctors.find(_ => _.id === registeredPatientValues.doctorId)!.name
+    registeredPatientValues.patientName = Patients.find(_ => _.id === registeredPatientValues.id)!.name
+    registeredPatientValues.birthday = moment(registeredPatientValues.birthday).format('YYYY-MM-DD')
+    registeredPatientValues.attendanceStatus = 10001500
+    registeredPatientValues.amountReceivable = amountReceivable
+    registeredPatientValues.actualMoney = feeValues.actualMoney
+    registeredPatientValues.discountedPrice = feeValues.discountedPrice
+    registeredPatientValues.medicarePayment = feeValues.medicarePayment
+    registeredPatientValues.paymentMethod = feeValues.paymentMethod
+    registeredPatientValues.address = registeredPatientValues.address?.join(' ')
+    registeredPatientValues.chargeDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    await dispatch({
+      type: 'addRegistered/add',
+      payload: registeredPatientValues
     })
+    form.resetFields()
+    setVisible(false)
+  }
 
-    // 选择患者，自动绑定信息
-    const handleSelectPatient = (value: number) => {
-        const patient = newPatients.find(_ => _.id === value)
-        if (patient) {
-            const ageUnitItem = ageUnits.find(_ => _.key === patient.ageUnit)
-            patient.ageUnit = ageUnitItem && ageUnitItem.key
-            patient.birthday = moment(patient.birthday)
-            setFieldsValue(patient)
-        }
-    }
+  const onCancel = () => {
+    setVisible(false)
+  }
 
-    const onFinish = (fields: AddRegisteredFieldsType) => {
-        const registrationFeeItem = registrationFeeOptions.find(_ => _.key === fields.registrationFee)
-        const medicalFeeItem = medicalFeeOptions.find(_ => _.key === fields.medicalFee)
-        const fee = medicalFeeItem ? registrationFeeItem!.value + medicalFeeItem.value : registrationFeeItem!.value
-        setAmountReceivable(fee)
-        setVisible(true)
-    }
+  const RegisteredInfoProps = {
+    doctors
+  }
 
-    const onOk = async (feeValues: RegisteredFeeFieldsType) => {
-        const registeredPatientValues = await form.getFieldsValue()
-        // 数据处理
-        registeredPatientValues.doctorName = doctors.find(_ => _.id === registeredPatientValues.doctorId)!.name
-        registeredPatientValues.patientName = Patients.find(_ => _.id === registeredPatientValues.id)!.name
-        registeredPatientValues.birthday = moment(registeredPatientValues.birthday).format('YYYY-MM-DD')
-        registeredPatientValues.attendanceStatus = 10001500
-        registeredPatientValues.amountReceivable = amountReceivable
-        registeredPatientValues.actualMoney = feeValues.actualMoney
-        registeredPatientValues.discountedPrice = feeValues.discountedPrice
-        registeredPatientValues.medicarePayment = feeValues.medicarePayment
-        registeredPatientValues.paymentMethod = feeValues.paymentMethod
-        registeredPatientValues.address = registeredPatientValues.address?.join(' ')
-        registeredPatientValues.chargeDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
-        await dispatch({
-            type: 'addRegistered/add',
-            payload: registeredPatientValues
-        })
-        form.resetFields()
-        setVisible(false)
-    }
+  const PatientInfoProps = {
+    patients: newPatients,
+    handleSelectPatient
+  }
 
-    const onCancel = () => {
-        setVisible(false)
-    }
+  const RegisteredFeeProps = {
+    visible,
+    confirmLoading: loading.effects['addRegistered/add'],
+    amountReceivable,
+    onOk,
+    onCancel,
+  }
 
-    const RegisteredInfoProps = {
-        doctors
-    }
-
-    const PatientInfoProps = {
-        patients: newPatients,
-        handleSelectPatient
-    }
-
-    const RegisteredFeeProps = {
-        visible,
-        confirmLoading: loading.effects['addRegistered/add'],
-        amountReceivable,
-        onOk,
-        onCancel,
-    }
-
-    return (
-        <Form
-            form={form}
-            layout='vertical'
-            initialValues={initialValues}
-            onFinish={onFinish}
+  return (
+    <Form
+      form={form}
+      layout='vertical'
+      initialValues={initialValues}
+      onFinish={onFinish}
+    >
+      <PageHeaderWrapper>
+        <Card
+          className={styles.main}
+          extra={
+            <div className='top-right-button'>
+              <Button
+                className={styles.btn}
+                icon={<PayCircleFilled className={styles.icon} />}
+                htmlType='submit'
+              >
+                <FormattedMessage id='registrationandmanagement.addandregistered.toll' />
+              </Button>
+            </div>
+          }
         >
-            <PageHeaderWrapper>
-                <Card
-                    className={styles.main}
-                    extra={
-                        <div className='top-right-button'>
-                            <Button
-                                className={styles.btn}
-                                icon={<PayCircleFilled className={styles.icon} />}
-                                htmlType='submit'
-                            >
-                                <FormattedMessage id='registrationandmanagement.addandregistered.toll' />
-                            </Button>
-                        </div>
-                    }
-                >
-                    <RegisteredInfo {...RegisteredInfoProps} />
-                    <PatientInfo {...PatientInfoProps} />
-                    <RegisteredFee {...RegisteredFeeProps} />
-                </Card>
-            </PageHeaderWrapper>
-        </Form>
-    )
+          <RegisteredInfo {...RegisteredInfoProps} />
+          <PatientInfo {...PatientInfoProps} />
+          <RegisteredFee {...RegisteredFeeProps} />
+        </Card>
+      </PageHeaderWrapper>
+    </Form>
+  )
 }
 
 export default connect(({ patients, doctors, loading }:
-    {
-        patients: patientManagementState,
-        doctors: DoctorsStateType,
-        loading: {
-            effects: {
-                [key: string]: boolean
-            }
-        }
-    }) => ({ patients, doctors: doctors.doctors, loading }))
-    (AddRegistered)
+  {
+    patients: patientManagementState,
+    doctors: DoctorsStateType,
+    loading: {
+      effects: {
+        [key: string]: boolean
+      }
+    }
+  }) => ({ patients, doctors: doctors.doctors, loading }))
+  (AddRegistered)
