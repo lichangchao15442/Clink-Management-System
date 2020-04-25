@@ -30,6 +30,7 @@ export default {
     'newlyandopened.drugs.enterCheckName': 'Enter Check Name',
     'newlyandopened.drugs.addDrugs': 'Add Drugs',
     'newlyandopened.drugs.pleaseSelectDrug': 'Please Select Drug',
+    'newlyandopened.prescriptionandtable.pleaseSelectDrug': 'Please select medicines to be set up in batch!',
 
 
 }

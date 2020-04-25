@@ -5,14 +5,6 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { usages, frequencies } from '@/utils/dataDictionary'
 
-
-
-
-
-
-
-
-
 const getColumns = (prescriptionType: number, params: {
   editingKey: string | number;
   edit: (record: O) => void;

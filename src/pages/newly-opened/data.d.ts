@@ -8,7 +8,7 @@ export interface newlyOpenedStateType {
 export interface WesternMedicineTableDataType {
     serialNumber: number;
     groupNumber: number;
-    key: string;
+    key: string | number;
     name: string;
     singleUsage: number;
     usage: number;

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Card, Button, Form, Table, Popconfirm } from 'antd'
-import { SettingFilled, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import React, { useState, useEffect, useRef, ReactText } from 'react'
+import { Card, Button, Form, Table, message } from 'antd'
+import { SettingFilled } from '@ant-design/icons'
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale'
 import _ from 'loadsh'
+import { Store } from 'rc-field-form/lib/interface'
 
 import EditableCell from './EditableCell'
 import getColumns from './columns'
-import { CurrentPrescriptionType } from '../../../../data'
+import BatchSettingModal from './BatchSettingModal'
+import { CurrentPrescriptionType, WesternMedicineTableDataType } from '../../../../data'
 
 import styles from './index.less'
 
@@ -18,13 +20,18 @@ interface PrescriptionTableProps {
 
 
 const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescription }) => {
-  // const initColumns = getColumns(currentPrescription.type)
 
   const [form] = Form.useForm()
-  const [data, setData] = useState([])
-  const [column, setColumn] = useState([])
-  const [editingKey, setEditingKey] = useState('')
-  const [handle, setHandle] = useState({ type: '', key: 0 })
+  // useState
+  const [data, setData] = useState([]) // Table的data
+  const [column, setColumn] = useState([]) // Table的columns
+  const [editingKey, setEditingKey] = useState('') // 当前编辑药品的key
+  const [handle, setHandle] = useState({ type: '', key: 0 }) // 事件处理函数的类型以及传递的参数
+  const [batchSettingModalVisible, setBatchSettingModalVisible] = useState(false) //批量设置弹窗的显隐
+  const [selectedRowKeys,setSelectedRowKeys] = useState<ReactText[]>([])
+
+  // useRef
+  // const selectedRowKeys = useRef<ReactText[]>([])
 
   // 更新data
   useEffect(() => {
@@ -88,6 +95,7 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
     setEditingKey('');
   };
 
+  // 删除
   const remove = (key: number) => {
     // TODO: bug:在事件处理程序中关于data，只能获取到上一次的值！
     // 错误定位：未知
@@ -96,6 +104,48 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
 
   }
 
+  // 处理table多选
+  const handleSelectChange = (keys: ReactText[]) => {
+    setSelectedRowKeys(keys)
+  }
+
+  // 批量设置
+  const handleBatchSetting = () => {
+    if (selectedRowKeys.length) {
+      // 已选择，弹出批量设置的弹出框
+      setBatchSettingModalVisible(true)
+
+    } else {
+      // 未选择，提醒请选择
+      message.warning(formatMessage({ id: 'newlyandopened.prescriptionandtable.pleaseSelectDrug' }))
+    }
+
+  }
+
+  // 确定批量设置
+  const handleBatchSettingOk = (values: Store) => {
+    setBatchSettingModalVisible(false)
+    // 将批量修改的值更新到data，由selectedRowKeys查找data中具体药品，进行数据合并
+    let newData = _.cloneDeep(data)
+    newData = newData.map((item: WesternMedicineTableDataType) => {
+      const keyItem = selectedRowKeys.find(key => item.key === key)
+      if (keyItem) {
+        return {
+          ...item,
+          ...values
+        }
+      }
+      return item
+    })
+    // 清空table中选中的选项
+    setSelectedRowKeys([])
+    setData(newData)
+  }
+
+  // 取消批量设置Modal
+  const handleBatchSettingCancel = () => {
+    setBatchSettingModalVisible(false)
+  }
 
   const mergedColumns = column.map(col => {
     if (!col.editable) {
@@ -112,15 +162,29 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
     };
   });
 
+  const batchSettingModalProps = {
+    visible: batchSettingModalVisible,
+    handleOk: handleBatchSettingOk,
+    handleCancel: handleBatchSettingCancel
+  }
+
   return (
     <Card
       className={styles.prescriptionTable}
       style={{ height: 600, marginBottom: 20 }}
       title='Rp'
-      extra={(
-        <Button className={styles.setting} type="link" icon={<SettingFilled />}>
-          <FormattedMessage id='newlyandopened.prescriptionandtable.batchSetting' />
-        </Button>
+      extra={currentPrescription.type === 10001800 && (
+        <>
+          <Button
+            className={styles.setting}
+            type="link"
+            icon={<SettingFilled />}
+            onClick={handleBatchSetting}
+          >
+            <FormattedMessage id='newlyandopened.prescriptionandtable.batchSetting' />
+          </Button>
+          <BatchSettingModal {...batchSettingModalProps} />
+        </>
       )}
     >
       <Form form={form} component={false}>
@@ -134,7 +198,9 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
           columns={mergedColumns}
           pagination={false}
           rowSelection={{
-            type: 'checkbox'
+            type: 'checkbox',
+            selectedRowKeys: selectedRowKeys,
+            onChange: handleSelectChange
           }}
           scroll={{ x: 1500, y: 400 }}
         />

@@ -30,5 +30,6 @@ export default {
     'newlyandopened.drugs.enterCheckName': '输入项目名',
     'newlyandopened.drugs.addDrugs': '添加药品',
     'newlyandopened.drugs.pleaseSelectDrug': '请选择药品',
+    'newlyandopened.prescriptionandtable.pleaseSelectDrug': '请选择要批量设置的药品',
 
 }
