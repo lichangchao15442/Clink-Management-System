@@ -186,7 +186,6 @@ const drugs = Mock.mock({
 export default {
     'GET /api/queryDrugs': (req: Request, res: Response) => {
         const { query } = req
-        console.log('query', query)
         let newData = drugs.data
         Object.keys(query).forEach(key => {
             if (Object.hasOwnProperty.call(query, key)) {
@@ -202,7 +201,6 @@ export default {
             })
             }
         })
-        console.log(newData)
         res.send({data:newData})
     }
 }

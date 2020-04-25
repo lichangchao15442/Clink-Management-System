@@ -73,7 +73,7 @@ const NewlyOpened: React.FC<NewlyOpenedProps> = props => {
           <PatientInformation {...PatientInformationProps} />
         </Card>
       </Form>
-      {/* {buttonType === 'prescription' ? <Prescription  {...PrescriptionProps} /> : 'medicalRecord'} */}
+      {buttonType === 'prescription' ? <Prescription  {...PrescriptionProps} /> : 'medicalRecord'}
     </PageHeaderWrapper>
   )
 }
