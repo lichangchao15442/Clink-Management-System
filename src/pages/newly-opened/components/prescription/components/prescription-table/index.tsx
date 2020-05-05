@@ -14,28 +14,33 @@ import styles from './index.less'
 
 
 interface PrescriptionTableProps {
-  currentPrescription: CurrentPrescriptionType;
+  currentPrescription: CurrentPrescriptionType; // 当前处方
+  handleRemoveDrug: (key: number) => void;
 }
 
 
 
-const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescription }) => {
+const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescription, handleRemoveDrug }) => {
 
   const [form] = Form.useForm()
   // useState
   const [data, setData] = useState([]) // Table的data
   const [column, setColumn] = useState([]) // Table的columns
   const [editingKey, setEditingKey] = useState('') // 当前编辑药品的key
-  const [handle, setHandle] = useState({ type: '', key: 0 }) // 事件处理函数的类型以及传递的参数
   const [batchSettingModalVisible, setBatchSettingModalVisible] = useState(false) //批量设置弹窗的显隐
-  const [selectedRowKeys,setSelectedRowKeys] = useState<ReactText[]>([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState<ReactText[]>([])
 
   // useRef
   // const selectedRowKeys = useRef<ReactText[]>([])
 
   // 更新data
   useEffect(() => {
-    setData(currentPrescription.data)
+    // 增加序号（作为删除处方中药品的索引）
+    const currentPrescriptionData = currentPrescription.data.map((item: any, index: number) => ({
+      ...item,
+      key: index + 1
+    }))
+    setData(currentPrescriptionData)
   }, [currentPrescription])
 
   // 更新columns
@@ -44,20 +49,6 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
     const columns = getColumns(currentPrescription.type, params)
     setColumn(columns)
   }, [currentPrescription, editingKey])
-
-  // 处理事件处理程序bug（比如onClick中只能取到上一次data值的bug）
-  useEffect(() => {
-    if (handle.type) {
-      const { type, key } = handle
-      if (type === 'remove') {
-        // 删除操作
-        const newData = [...data]
-        newData.splice(key - 1, 1)
-        newData.forEach((item, index) => { item.key = index + 1 })
-        setData(newData)
-      }
-    }
-  }, [handle])
 
   // 编辑
   const edit = (record: O) => {
@@ -97,11 +88,8 @@ const PrescriptionTable: React.FC<PrescriptionTableProps> = ({ currentPrescripti
 
   // 删除
   const remove = (key: number) => {
-    // TODO: bug:在事件处理程序中关于data，只能获取到上一次的值！
-    // 错误定位：未知
-    // 解决方法：设置一个事件处理函数的开关，通过state告知该事件处理韩式的功能和参数
-    setHandle({ type: 'remove', key })
-
+    // 交给父组件进行处理
+    handleRemoveDrug(key)
   }
 
   // 处理table多选
