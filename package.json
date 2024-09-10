@@ -23,7 +23,7 @@
     "dva": "2.6.0-beta.16",
     "loadsh": "0.0.4",
     "mockjs": "^1.1.0",
-    "path-to-regexp": "2.4.0",
+    "path-to-regexp": "8.0.0",
     "qs": "^6.9.3",
     "rc-field-form": "^1.1.0",
     "react": "^16.13.1",
